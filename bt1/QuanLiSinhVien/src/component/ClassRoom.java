@@ -12,13 +12,14 @@ import java.util.ArrayList;
  * @author CPU12407-local
  */
 public class ClassRoom {
+
     private String Name;
     private ArrayList<Student> listStudent = new ArrayList<Student>();
-    
+
     public ClassRoom() {
         this.Name = "";
     }
-    
+
     public String getName() {
         return Name;
     }
@@ -26,7 +27,7 @@ public class ClassRoom {
     public void setName(String Name) {
         this.Name = Name;
     }
-    
+
     public void addStudent(Student sd) {
         this.listStudent.add(sd);
     }
@@ -34,5 +35,5 @@ public class ClassRoom {
     public ArrayList<Student> getListStudent() {
         return listStudent;
     }
-    
+
 }

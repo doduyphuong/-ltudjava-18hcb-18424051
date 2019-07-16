@@ -15,8 +15,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,13 +24,13 @@ import javax.swing.table.DefaultTableModel;
  * @author CPU12407-local
  */
 public class manageStudent extends javax.swing.JFrame {
-
     private final int FILE_OPEN = 1;
     private final int FILE_SAVE = 2;
     private final String[] columnNames = {
         "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
     };
-    School school = new School();
+    addStudent a = new addStudent();
+    static School school = new School();
 
     /**
      * Creates new form manageStudent
@@ -49,42 +49,19 @@ public class manageStudent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
         jbtImport = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStudent = new javax.swing.JTable();
+        jbAddStudent = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Manage Student");
 
         jbtImport.setText("Import");
-        jbtImport.setActionCommand("Import");
         jbtImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtImportActionPerformed(evt);
@@ -111,6 +88,13 @@ public class manageStudent extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableStudent);
 
+        jbAddStudent.setText("Add Student");
+        jbAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddStudentActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItem1.setText("jMenuItem1");
@@ -130,12 +114,14 @@ public class manageStudent extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(744, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbAddStudent)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtExport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtImport)
                 .addContainerGap())
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +129,9 @@ public class manageStudent extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtImport, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtExport, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtExport)
+                        .addComponent(jbAddStudent)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -152,7 +140,7 @@ public class manageStudent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        // TODO addStudent your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jbtImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtImportActionPerformed
@@ -162,6 +150,10 @@ public class manageStudent extends javax.swing.JFrame {
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
         operateFile("Export file", FILE_SAVE);
     }//GEN-LAST:event_jbtExportActionPerformed
+
+    private void jbAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddStudentActionPerformed
+        a.setVisible(true);
+    }//GEN-LAST:event_jbAddStudentActionPerformed
 
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
@@ -273,6 +265,7 @@ public class manageStudent extends javax.swing.JFrame {
             }
             
             jTableStudent.setModel(tableModel);
+             a = new addStudent();
         } else {
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.setColumnIdentifiers(columnNames);
@@ -311,18 +304,19 @@ public class manageStudent extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new manageStudent().setVisible(true);
+//                mStudent = new manageStudent();
+//                mStudent.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableStudent;
+    private javax.swing.JButton jbAddStudent;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
     // End of variables declaration//GEN-END:variables
