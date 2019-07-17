@@ -35,5 +35,12 @@ public class ClassRoom {
     public ArrayList<Student> getListStudent() {
         return listStudent;
     }
+    
+    public boolean checkNameClass(String _name) {
+        if(this.Name.equalsIgnoreCase(_name)) {
+            return true;
+        }
+        return false;
+    }
 
 }

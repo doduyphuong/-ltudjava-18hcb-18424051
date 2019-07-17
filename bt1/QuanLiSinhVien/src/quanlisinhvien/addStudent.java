@@ -6,22 +6,27 @@
 package quanlisinhvien;
 
 import component.ClassRoom;
+import component.School;
 import component.Student;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import static quanlisinhvien.manageStudent.school;
 
 /**
  *
  * @author CPU12407-local
  */
 public class addStudent extends javax.swing.JDialog {
-
+    private School school = new School();
     /**
      * Creates new form add
      */
     public addStudent() {
-        
+        initComponents();
+        init();
+    }
+    
+    public addStudent(School _school) {
+        this.school = _school;
         initComponents();
         init();
     }

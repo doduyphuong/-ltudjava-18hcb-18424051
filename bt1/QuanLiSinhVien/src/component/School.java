@@ -43,12 +43,19 @@ public class School {
         return null;
     }
 
-    public ClassRoom getClassRoom(String Name) {
-        if (Name.equalsIgnoreCase("")) {
-
+    public ClassRoom getClassRoom(String nameClass) {
+        ClassRoom result = new ClassRoom();
+        if (!nameClass.equals("")) {
+            for(ClassRoom cr : this.listRoom) { 
+                boolean checkName = cr.checkNameClass(cr.getName());
+                System.out.print(checkName);
+                if(checkName) {
+                    result = cr;
+                }
+            }
         }
 
-        return null;
+        return result;
     }
 
 }

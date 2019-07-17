@@ -11,8 +11,11 @@ import component.Student;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -24,18 +27,26 @@ import javax.swing.table.DefaultTableModel;
  * @author CPU12407-local
  */
 public class manageStudent extends javax.swing.JFrame {
+
     private final int FILE_OPEN = 1;
     private final int FILE_SAVE = 2;
-    private final String[] columnNames = {
+    private String className = "17HCB";
+    private String[] columnNames = {
         "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
     };
-    addStudent a = new addStudent();
+    addStudent a;
     static School school = new School();
 
     /**
      * Creates new form manageStudent
      */
     public manageStudent() {
+        initComponents();
+        initLayout();
+    }
+
+    public manageStudent(String className) {
+        this.className = className;
         initComponents();
         initLayout();
     }
@@ -152,6 +163,7 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtExportActionPerformed
 
     private void jbAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddStudentActionPerformed
+        a = new addStudent(school);
         a.setVisible(true);
     }//GEN-LAST:event_jbAddStudentActionPerformed
 
@@ -192,6 +204,10 @@ public class manageStudent extends javax.swing.JFrame {
             ClassRoom cl = new ClassRoom();
             cl.setName(className[0]);
 
+            // Lấy filter name
+//            line = br.readLine();
+//            String[] filterName = line.split(",");
+//            this.columnNames = filterName;
             // Lấy thông tin Student
             while ((line = br.readLine()) != null) {
                 String[] inforStudent = line.split(",");
@@ -223,12 +239,57 @@ public class manageStudent extends javax.swing.JFrame {
     private void writeFile(File file) {
         try {
             file.createNewFile();
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            String data = "";
-            bw.write(data);
+//            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file), StandardCharsets.UTF_8)
+            );
+//            StringBuilder data = new StringBuilder();
+
+            // Lấy lớp học
+            ClassRoom cr = new ClassRoom();
+            cr = school.getClassRoom(this.className);
+
+            // Ghi tên lớp
+            bw.append(this.className);
+            bw.append(',');
+            bw.append(',');
+            bw.append(',');
+            bw.append('\n');
+
+            // Ghi các filter
+            bw.append(this.columnNames[1]);
+            bw.append(',');
+            bw.append(this.columnNames[2]);
+            bw.append(',');
+            bw.append(this.columnNames[3]);
+            bw.append(',');
+            bw.append(this.columnNames[4]);
+            bw.append('\n');
+
+            // Kiểm tra xem lớp có sinh viên hay không
+            ArrayList<Student> listStudent = new ArrayList<Student>();
+            listStudent = cr.getListStudent();
+            if (listStudent.size() > 0) {
+                // Lấy danh sách học sinh trong lớp
+                for (Student sd : listStudent) {
+                    bw.append(sd.getMSSV());
+                    bw.append(',');
+                    bw.append(sd.getName());
+                    bw.append(',');
+                    if (sd.getSex() == 0) {
+                        bw.append("Nam");
+                    } else {
+                        bw.append("Nữ");
+                    }
+                    bw.append(',');
+                    bw.append(sd.getCMND());
+                    bw.append('\n');
+                }
+            }
+
+//            bw.write(data.toString());
             bw.close();
-            fw.close();
+//            fw.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error to save file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -237,7 +298,7 @@ public class manageStudent extends javax.swing.JFrame {
     private void initLayout() {
 //        System.out.print(school.getNumClass());
         if (school.getNumClass() > 0) {
-            
+
             ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
             listRoom = school.getListRoom();
 
@@ -263,9 +324,9 @@ public class manageStudent extends javax.swing.JFrame {
                     stt++;
                 }
             }
-            
+
             jTableStudent.setModel(tableModel);
-             a = new addStudent();
+            a = new addStudent();
         } else {
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.setColumnIdentifiers(columnNames);
