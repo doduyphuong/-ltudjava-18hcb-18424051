@@ -15,6 +15,7 @@ public class School {
 
     private int numClass;
     private ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
+    private ArrayList<ClassRoomCourse> listRoomCourse = new ArrayList<ClassRoomCourse>();
 
     public School() {
         this.numClass = 0;

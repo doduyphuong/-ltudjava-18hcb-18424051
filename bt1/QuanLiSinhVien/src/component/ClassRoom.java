@@ -15,6 +15,7 @@ public class ClassRoom {
 
     private String Name;
     private ArrayList<Student> listStudent = new ArrayList<Student>();
+    ArrayList<CalenderCourse> listCourse = new ArrayList<CalenderCourse>();
 
     public ClassRoom() {
         this.Name = "";
