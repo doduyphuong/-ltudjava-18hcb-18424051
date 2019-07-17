@@ -6,17 +6,18 @@
 package quanlisinhvien;
 
 import component.ClassRoom;
-import component.School;
 import component.Student;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import static quanlisinhvien.manageStudent.school;
 
 /**
  *
  * @author CPU12407-local
  */
 public class addStudent extends javax.swing.JDialog {
-    private School school = new School();
+
     /**
      * Creates new form add
      */
@@ -24,9 +25,8 @@ public class addStudent extends javax.swing.JDialog {
         initComponents();
         init();
     }
-    
-    public addStudent(School _school) {
-        this.school = _school;
+
+    public addStudent(String className) {
         initComponents();
         init();
     }
@@ -36,14 +36,14 @@ public class addStudent extends javax.swing.JDialog {
         ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
         System.out.print(school.getNumClass());
         listRoom = school.getListRoom();
-        for(ClassRoom cr : listRoom) {
-            cr.getName();
-            model.addElement(cr.getName());
+        for (ClassRoom cr : listRoom) {
+            String _name = cr.getName();
+            model.addElement(_name);
         }
         
         jcbClass.setModel(model);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -191,22 +191,75 @@ public class addStudent extends javax.swing.JDialog {
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jLabel6});
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
-
         String mssv = jtfMSSV.getText();
         String name = jtfName.getText();
         String cmnd = jtfCMND.getText();
         int sex = -1;
+
         if (jrbSex1.isSelected()) {
             sex = 0;
-        } else {
-            sex = 1;
         }
 
-        Student sd = new Student();
+        if (jrbSex2.isSelected()) {
+            sex = 0;
+        }
+
+        boolean validate = this.validateForm();
+        if (!validate) {
+            String nameClass = String.valueOf(jcbClass.getItemAt(jcbClass.getSelectedIndex()));
+            Student sd = new Student(mssv, name, sex, cmnd);
+            school.addStudentToClass(nameClass, sd);
+            JOptionPane.showMessageDialog(null, "Thêm học sinh thành công.");
+            jtfMSSV.setText("");
+            jtfName.setText("");
+            jtfCMND.setText("");
+        }
+
+
     }//GEN-LAST:event_jbtAddStudentActionPerformed
+
+    private boolean validateForm() {
+        boolean validate = false;
+        String mssv = jtfMSSV.getText();
+        String name = jtfName.getText();
+        String cmnd = jtfCMND.getText();
+        StringBuilder msgErr = new StringBuilder();
+
+        if (mssv.equals("")) {
+            validate = true;
+            msgErr.append("MSSV không thể trống");
+            msgErr.append("\n");
+        }
+
+        if (name.equals("")) {
+            validate = true;
+            msgErr.append("Tên không thể trống");
+            msgErr.append("\n");
+        }
+
+        if (cmnd.equals("")) {
+            validate = true;
+            msgErr.append("CMND không thể trống");
+            msgErr.append("\n");
+
+        }
+
+        if (!jrbSex1.isSelected() || !jrbSex1.isSelected()) {
+            validate = true;
+            msgErr.append("Vui lòng chọn giới tính");
+            msgErr.append("\n");
+        }
+
+        if (validate == true) {
+            JOptionPane.showMessageDialog(null, msgErr, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return validate;
+    }
 
     /**
      * @param args the command line arguments

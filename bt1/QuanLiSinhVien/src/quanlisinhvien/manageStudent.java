@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -65,12 +66,14 @@ public class manageStudent extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStudent = new javax.swing.JTable();
         jbAddStudent = new javax.swing.JButton();
+        jbtUpdate = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Student");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jbtImport.setText("Import");
         jbtImport.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +109,13 @@ public class manageStudent extends javax.swing.JFrame {
             }
         });
 
+        jbtUpdate.setText("Update");
+        jbtUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtUpdateActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItem1.setText("jMenuItem1");
@@ -126,6 +136,8 @@ public class manageStudent extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbAddStudent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtExport)
@@ -142,12 +154,14 @@ public class manageStudent extends javax.swing.JFrame {
                     .addComponent(jbtImport, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtExport)
-                        .addComponent(jbAddStudent)))
+                        .addComponent(jbAddStudent)
+                        .addComponent(jbtUpdate)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -163,9 +177,13 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtExportActionPerformed
 
     private void jbAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddStudentActionPerformed
-        a = new addStudent(school);
+        a = new addStudent();
         a.setVisible(true);
     }//GEN-LAST:event_jbAddStudentActionPerformed
+
+    private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed
+        this.initLayout();
+    }//GEN-LAST:event_jbtUpdateActionPerformed
 
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
@@ -195,41 +213,51 @@ public class manageStudent extends javax.swing.JFrame {
 
     private void readFile(File file) {
         try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            // Lấy tên lớp
-            line = br.readLine();
-            String[] className = line.split(",");
-            ClassRoom cl = new ClassRoom();
-            cl.setName(className[0]);
+            try (FileReader fr = new FileReader(file)) {
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                // Lấy tên lớp
+                line = br.readLine();
+                String[] _className = line.split(",");
 
-            // Lấy filter name
+                ClassRoom cr;
+                cr = school.getClassRoom(this.className);
+                boolean checkExist = true;
+                if (cr.checkNameClass("")) {
+                    checkExist = false;
+                    cr.setName(_className[0]);
+                }
+
+                // Lấy filter name
 //            line = br.readLine();
 //            String[] filterName = line.split(",");
 //            this.columnNames = filterName;
-            // Lấy thông tin Student
-            while ((line = br.readLine()) != null) {
-                String[] inforStudent = line.split(",");
-                Student student = new Student(inforStudent[0], inforStudent[1], inforStudent[3]);
-                int sex = -1;
-                if (inforStudent[2].equalsIgnoreCase("Nam")) {
-                    sex = 0;
+                // Lấy thông tin Student
+                while ((line = br.readLine()) != null) {
+                    String[] inforStudent = line.split(",");
+                    Student student = new Student(inforStudent[0], inforStudent[1], inforStudent[3]);
+                    int sex = -1;
+                    if (inforStudent[2].equalsIgnoreCase("Nam")) {
+                        sex = 0;
+                    }
+
+                    if (inforStudent[2].equalsIgnoreCase("Nữ")) {
+                        sex = 1;
+                    }
+
+                    student.setSex(sex);
+                    cr.addStudent(student);
                 }
 
-                if (inforStudent[2].equalsIgnoreCase("Nữ")) {
-                    sex = 1;
+                if (checkExist == false) {
+                    school.addClass(cr);
+                    school.setNumClass(school.getNumClass() + 1);
+                } else {
+                    school.setClassRoom(cr, className);
                 }
 
-                student.setSex(sex);
-                cl.addStudent(student);
-
+                br.close();
             }
-            school.addClass(cl);
-            school.setNumClass(school.getNumClass() + 1);
-
-            br.close();
-            fr.close();
             initLayout();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -326,12 +354,12 @@ public class manageStudent extends javax.swing.JFrame {
             }
 
             jTableStudent.setModel(tableModel);
-            a = new addStudent();
         } else {
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.setColumnIdentifiers(columnNames);
             jTableStudent.setModel(tableModel);
         }
+        
     }
 
     /**
@@ -380,5 +408,6 @@ public class manageStudent extends javax.swing.JFrame {
     private javax.swing.JButton jbAddStudent;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
+    private javax.swing.JButton jbtUpdate;
     // End of variables declaration//GEN-END:variables
 }

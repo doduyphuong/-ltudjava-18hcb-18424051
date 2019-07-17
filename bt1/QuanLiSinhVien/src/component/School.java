@@ -32,6 +32,14 @@ public class School {
         this.listRoom.add(cr);
     }
 
+    public void addStudentToClass(String className, Student _sd) {
+        for (ClassRoom cr : this.listRoom) {
+            if (cr.checkNameClass(className)) {
+                cr.addStudent(_sd);
+            }
+        }
+    }
+
     public ArrayList<ClassRoom> getListRoom() {
         return listRoom;
     }
@@ -46,10 +54,10 @@ public class School {
     public ClassRoom getClassRoom(String nameClass) {
         ClassRoom result = new ClassRoom();
         if (!nameClass.equals("")) {
-            for(ClassRoom cr : this.listRoom) { 
+            for (ClassRoom cr : this.listRoom) {
                 boolean checkName = cr.checkNameClass(cr.getName());
                 System.out.print(checkName);
-                if(checkName) {
+                if (checkName) {
                     result = cr;
                 }
             }
@@ -58,4 +66,12 @@ public class School {
         return result;
     }
 
+    public void setClassRoom(ClassRoom _cr, String className) {
+        for (ClassRoom cr : this.listRoom) {
+            if (cr.checkNameClass(className)) {
+                int _index = this.listRoom.indexOf(cr);
+                this.listRoom.set(_index, _cr);
+            }
+        }
+    }
 }
