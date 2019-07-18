@@ -32,16 +32,32 @@ public class ClassRoom {
     public void addStudent(Student sd) {
         this.listStudent.add(sd);
     }
-
+    
+    public void addCalenderCourse(CalenderCourse calenderCourse) {
+        this.listCourse.add(calenderCourse);
+    }
+    
     public ArrayList<Student> getListStudent() {
         return listStudent;
     }
-    
+
+    public void setListStudent(ArrayList<Student> listStudent) {
+        this.listStudent = listStudent;
+    }
+
     public boolean checkNameClass(String _name) {
-        if(this.Name.equalsIgnoreCase(_name)) {
+        if (this.Name.equalsIgnoreCase(_name)) {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<CalenderCourse> getListCourse() {
+        return listCourse;
+    }
+
+    public void setListCourse(ArrayList<CalenderCourse> listCourse) {
+        this.listCourse = listCourse;
     }
 
 }

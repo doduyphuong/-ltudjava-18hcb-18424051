@@ -15,6 +15,17 @@ public class CalenderCourse {
     private Course course;
     private String location;
 
+    public CalenderCourse() {
+        this.course.setId("");
+        this.course.setName("");
+        this.location = "";
+    }
+    
+    public CalenderCourse(Course course, String _location) {
+        this.course = course;
+        this.location = _location;
+    }
+
     public Course getCourse() {
         return course;
     }

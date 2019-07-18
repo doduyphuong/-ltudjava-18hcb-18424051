@@ -61,15 +61,19 @@ public class manageStudent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem2 = new javax.swing.JMenuItem();
         jbtImport = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStudent = new javax.swing.JTable();
         jbAddStudent = new javax.swing.JButton();
         jbtUpdate = new javax.swing.JButton();
+        jbtViewCourse = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Student");
@@ -116,6 +120,13 @@ public class manageStudent extends javax.swing.JFrame {
             }
         });
 
+        jbtViewCourse.setText("View Course");
+        jbtViewCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtViewCourseActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItem1.setText("jMenuItem1");
@@ -138,6 +149,8 @@ public class manageStudent extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtViewCourse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbAddStudent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtExport)
@@ -155,7 +168,8 @@ public class manageStudent extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtExport)
                         .addComponent(jbAddStudent)
-                        .addComponent(jbtUpdate)))
+                        .addComponent(jbtUpdate)
+                        .addComponent(jbtViewCourse)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -184,6 +198,11 @@ public class manageStudent extends javax.swing.JFrame {
     private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed
         this.initLayout();
     }//GEN-LAST:event_jbtUpdateActionPerformed
+
+    private void jbtViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewCourseActionPerformed
+        manageCalenderCourse calenderCourse = new manageCalenderCourse(this);
+        calenderCourse.setVisible(true);
+    }//GEN-LAST:event_jbtViewCourseActionPerformed
 
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
@@ -403,11 +422,13 @@ public class manageStudent extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableStudent;
     private javax.swing.JButton jbAddStudent;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
     private javax.swing.JButton jbtUpdate;
+    private javax.swing.JButton jbtViewCourse;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,12 @@ package component;
 public class Course {
     private String id;
     private String name;
-
+    
+    public Course (String _id, String _name) {
+        this.id = _id;
+        this.name = _name;
+    }
+    
     public String getId() {
         return id;
     }

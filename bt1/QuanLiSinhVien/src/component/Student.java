@@ -36,6 +36,13 @@ public class Student {
         this.CMND = _CMND;
     }
     
+    public Student(String _MSSV, String _Name) {
+        this.MSSV = _MSSV;
+        this.Name = _Name;
+        this.Sex = -1;
+        this.CMND = "";
+    }
+    
     public String getMSSV() {
         return MSSV;
     }

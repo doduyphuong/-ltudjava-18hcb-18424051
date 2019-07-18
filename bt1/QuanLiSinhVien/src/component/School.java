@@ -75,4 +75,26 @@ public class School {
             }
         }
     }
+
+    public ArrayList<ClassRoomCourse> getListRoomCourse() {
+        return listRoomCourse;
+    }
+
+    public void setListRoomCourse(ArrayList<ClassRoomCourse> listRoomCourse) {
+        this.listRoomCourse = listRoomCourse;
+    }
+
+    public ClassRoomCourse getClassRoomCourse(String className) {
+        ClassRoomCourse result = new ClassRoomCourse();
+        if (this.listRoomCourse.size() > 0) {
+            for (ClassRoomCourse crc : this.listRoomCourse) {
+                if (crc.checkClassName(className)) {
+                    result = crc;
+                }
+            }
+        }
+
+        return result;
+    }
+
 }
