@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class ClassRoomCourse {
 
     private String className;
+    private String idCourse;
     private ArrayList<Student> listStudent = new ArrayList<Student>();
     private ArrayList<TableScore> listTableScore = new ArrayList<TableScore>();
     
@@ -23,6 +24,14 @@ public class ClassRoomCourse {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getIdCourse() {
+        return idCourse;
+    }
+
+    public void setIdCourse(String idCourse) {
+        this.idCourse = idCourse;
     }
 
     public ArrayList<Student> getListStudent() {
@@ -45,7 +54,7 @@ public class ClassRoomCourse {
         int result = 0;
         if(this.listTableScore.size() > 0) {
             for(TableScore ts : this.listTableScore) {
-                if(ts.getFinalSrore() >= 5) {
+                if(ts.getFinalScore() >= 5) {
                     result += 1;
                 }
             }
@@ -57,7 +66,7 @@ public class ClassRoomCourse {
         int result = 0;
         if(this.listTableScore.size() > 0) {
             for(TableScore ts : this.listTableScore) {
-                if(ts.getFinalSrore() < 5) {
+                if(ts.getFinalScore() < 5) {
                     result += 1;
                 }
             }
@@ -67,22 +76,22 @@ public class ClassRoomCourse {
     
     public double getPercentPass() {
         double result = 0;
-        
-        result = this.getTotalPass() / this.listTableScore.size();
+        double totalPass = this.getTotalPass();
+        result = (totalPass * 100) / this.listTableScore.size();
         
         return result;
     }
     
     public double getPercentFail() {
         double result = 0;
-        
-        result = this.getTotalFail() / this.listTableScore.size();
+        double totalFail = this.getTotalFail();
+        result = (totalFail * 100) / this.listTableScore.size();
         
         return result;
     }
     
-    public boolean checkClassName(String name) {
-        if(this.className.equalsIgnoreCase(name)) {
+    public boolean checkClassName(String name, String id) {
+        if(this.className.equalsIgnoreCase(name) && this.idCourse.equalsIgnoreCase(id)) {
             return true;
         }
         return false;

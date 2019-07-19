@@ -13,10 +13,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static quanlisinhvien.manageStudent.school;
+import static quanlisinhvien.manageClassRoom.school;
 
 /**
  *
@@ -41,10 +42,11 @@ public class manageCalenderCourse extends javax.swing.JFrame {
         initLayout();
     }
 
-    public manageCalenderCourse(manageStudent mStudent) {
+    public manageCalenderCourse(String _className, manageStudent mStudent) {
+        this.className = _className;
+        this.mStudent = mStudent;
         initComponents();
         initLayout();
-        this.mStudent = mStudent;
         this.mStudent.setVisible(false);
     }
 
@@ -54,6 +56,7 @@ public class manageCalenderCourse extends javax.swing.JFrame {
         if (listCalenderCourse.size() > 0) {
             int stt = 1;
             DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultComboBoxModel cbModel = new DefaultComboBoxModel();
             tableModel.setColumnIdentifiers(columnNames);
             for (CalenderCourse calenderCourse : listCalenderCourse) {
                 String[] rows = new String[4];
@@ -63,14 +66,17 @@ public class manageCalenderCourse extends javax.swing.JFrame {
                 rows[3] = calenderCourse.getLocation();
 
                 tableModel.addRow(rows);
+                cbModel.addElement(calenderCourse.getCourse().getId());
                 stt++;
             }
 
             jtCalenderCourse.setModel(tableModel);
+            jcbClassCourse.setModel(cbModel);
         } else {
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.setColumnIdentifiers(columnNames);
             jtCalenderCourse.setModel(tableModel);
+            jcbClassCourse.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         }
 
     }
@@ -89,8 +95,11 @@ public class manageCalenderCourse extends javax.swing.JFrame {
         jbtImport = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jbtBack = new javax.swing.JButton();
+        jcbClassCourse = new javax.swing.JComboBox();
+        jbtnViewClassCourse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Quản lý lịch học");
 
         jtCalenderCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,29 +135,50 @@ public class manageCalenderCourse extends javax.swing.JFrame {
             }
         });
 
+        jcbClassCourse.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jbtnViewClassCourse.setText("Class Course");
+        jbtnViewClassCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnViewClassCourseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jbtBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtExport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtImport)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcbClassCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnViewClassCourse)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbtBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtExport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtImport)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbtBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtImport)
+                        .addComponent(jbtExport)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtImport)
-                    .addComponent(jbtExport)
-                    .addComponent(jbtBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(58, 58, 58)
+                    .addComponent(jcbClassCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnViewClassCourse))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -168,6 +198,16 @@ public class manageCalenderCourse extends javax.swing.JFrame {
         this.mStudent.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtBackActionPerformed
+
+    private void jbtnViewClassCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewClassCourseActionPerformed
+        String idCourse = String.valueOf(jcbClassCourse.getItemAt(jcbClassCourse.getSelectedIndex()));
+        if (!idCourse.equals("null")) {
+            manageClassRoomCourse mClassRoomCourse = new manageClassRoomCourse(this, this.className, idCourse);
+            mClassRoomCourse.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa có danh sách lịch học.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jbtnViewClassCourseActionPerformed
 
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
@@ -210,15 +250,15 @@ public class manageCalenderCourse extends javax.swing.JFrame {
 
             while ((line = br.readLine()) != null) {
                 String[] _calenderCourse = line.split(",");
-                
-                
+
                 // Tạo một thời khóa biểu cho môn học
                 Course course = new Course(_calenderCourse[0], _calenderCourse[1]);
-                CalenderCourse calenderCourse = new CalenderCourse(course,_calenderCourse[2]);
+                CalenderCourse calenderCourse = new CalenderCourse(course, _calenderCourse[2]);
 
                 cr.addCalenderCourse(calenderCourse);
                 ClassRoomCourse crc = new ClassRoomCourse();
                 crc.setClassName(className);
+                crc.setIdCourse(_calenderCourse[0]);
 
                 // Lấy danh sách sinh viên của lớp gán vào lớp học của môn
                 crc.setListStudent(school.getClassRoom(className).getListStudent());
@@ -280,6 +320,8 @@ public class manageCalenderCourse extends javax.swing.JFrame {
     private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
+    private javax.swing.JButton jbtnViewClassCourse;
+    private javax.swing.JComboBox jcbClassCourse;
     private javax.swing.JTable jtCalenderCourse;
     // End of variables declaration//GEN-END:variables
 }

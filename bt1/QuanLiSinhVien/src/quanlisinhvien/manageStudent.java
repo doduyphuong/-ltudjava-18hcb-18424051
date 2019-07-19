@@ -6,22 +6,19 @@
 package quanlisinhvien;
 
 import component.ClassRoom;
-import component.School;
 import component.Student;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static quanlisinhvien.manageClassRoom.school;
 
 /**
  *
@@ -36,7 +33,7 @@ public class manageStudent extends javax.swing.JFrame {
         "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
     };
     addStudent a;
-    static School school = new School();
+    manageClassRoom mClassRoom;
 
     /**
      * Creates new form manageStudent
@@ -46,10 +43,12 @@ public class manageStudent extends javax.swing.JFrame {
         initLayout();
     }
 
-    public manageStudent(String className) {
+    public manageStudent(String className, manageClassRoom _mClassRoom) {
         this.className = className;
+        this.mClassRoom = _mClassRoom;
         initComponents();
         initLayout();
+        this.mClassRoom.setVisible(false);
     }
 
     /**
@@ -69,6 +68,7 @@ public class manageStudent extends javax.swing.JFrame {
         jbAddStudent = new javax.swing.JButton();
         jbtUpdate = new javax.swing.JButton();
         jbtViewCourse = new javax.swing.JButton();
+        jbtBack = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -76,7 +76,7 @@ public class manageStudent extends javax.swing.JFrame {
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Manage Student");
+        setTitle("Quản lý sinh viên");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jbtImport.setText("Import");
@@ -127,6 +127,13 @@ public class manageStudent extends javax.swing.JFrame {
             }
         });
 
+        jbtBack.setText("Back");
+        jbtBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBackActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItem1.setText("jMenuItem1");
@@ -146,7 +153,9 @@ public class manageStudent extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jbtBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtViewCourse)
@@ -169,7 +178,8 @@ public class manageStudent extends javax.swing.JFrame {
                         .addComponent(jbtExport)
                         .addComponent(jbAddStudent)
                         .addComponent(jbtUpdate)
-                        .addComponent(jbtViewCourse)))
+                        .addComponent(jbtViewCourse)
+                        .addComponent(jbtBack)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -191,7 +201,7 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtExportActionPerformed
 
     private void jbAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddStudentActionPerformed
-        a = new addStudent();
+        a = new addStudent(this.className);
         a.setVisible(true);
     }//GEN-LAST:event_jbAddStudentActionPerformed
 
@@ -200,9 +210,14 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtUpdateActionPerformed
 
     private void jbtViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewCourseActionPerformed
-        manageCalenderCourse calenderCourse = new manageCalenderCourse(this);
+        manageCalenderCourse calenderCourse = new manageCalenderCourse(this.className, this);
         calenderCourse.setVisible(true);
     }//GEN-LAST:event_jbtViewCourseActionPerformed
+
+    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
+        this.mClassRoom.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtBackActionPerformed
 
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
@@ -352,24 +367,24 @@ public class manageStudent extends javax.swing.JFrame {
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.setColumnIdentifiers(columnNames);
             int stt = 1;
-            for (ClassRoom cr : listRoom) {
-                ArrayList<Student> listStudent = new ArrayList<Student>();
-                listStudent = cr.getListStudent();
-                for (Student sd : listStudent) {
-                    String[] rows = new String[5];
-                    rows[0] = String.valueOf(stt);
-                    rows[1] = sd.getMSSV();
-                    rows[2] = sd.getName();
-                    if (sd.getSex() == 0) {
-                        rows[3] = "Nam";
-                    } else {
-                        rows[3] = "Nữ";
-                    }
-                    rows[4] = sd.getCMND();
+            ClassRoom cr = school.getClassRoom(className);
 
-                    tableModel.addRow(rows);
-                    stt++;
+            ArrayList<Student> listStudent = new ArrayList<Student>();
+            listStudent = cr.getListStudent();
+            for (Student sd : listStudent) {
+                String[] rows = new String[5];
+                rows[0] = String.valueOf(stt);
+                rows[1] = sd.getMSSV();
+                rows[2] = sd.getName();
+                if (sd.getSex() == 0) {
+                    rows[3] = "Nam";
+                } else {
+                    rows[3] = "Nữ";
                 }
+                rows[4] = sd.getCMND();
+
+                tableModel.addRow(rows);
+                stt++;
             }
 
             jTableStudent.setModel(tableModel);
@@ -378,7 +393,7 @@ public class manageStudent extends javax.swing.JFrame {
             tableModel.setColumnIdentifiers(columnNames);
             jTableStudent.setModel(tableModel);
         }
-        
+
     }
 
     /**
@@ -426,6 +441,7 @@ public class manageStudent extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableStudent;
     private javax.swing.JButton jbAddStudent;
+    private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
     private javax.swing.JButton jbtUpdate;

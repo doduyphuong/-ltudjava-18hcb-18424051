@@ -10,7 +10,8 @@ import component.Student;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import static quanlisinhvien.manageStudent.school;
+import static quanlisinhvien.manageClassRoom.school;
+
 
 /**
  *
@@ -18,6 +19,7 @@ import static quanlisinhvien.manageStudent.school;
  */
 public class addStudent extends javax.swing.JDialog {
 
+    private String className;
     /**
      * Creates new form add
      */
@@ -26,21 +28,22 @@ public class addStudent extends javax.swing.JDialog {
         init();
     }
 
-    public addStudent(String className) {
+    public addStudent(String _className) {
+        this.className = _className;
         initComponents();
         init();
     }
 
     private void init() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
-        System.out.print(school.getNumClass());
-        listRoom = school.getListRoom();
-        for (ClassRoom cr : listRoom) {
-            String _name = cr.getName();
-            model.addElement(_name);
-        }
-        
+//        ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
+//        System.out.print(school.getNumClass());
+//        listRoom = school.getListRoom();
+//        for (ClassRoom cr : listRoom) {
+//            String _name = cr.getName();
+//            model.addElement(_name);
+//        }
+        model.addElement(this.className);
         jcbClass.setModel(model);
     }
 
@@ -69,7 +72,7 @@ public class addStudent extends javax.swing.JDialog {
         jcbClass = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add Student");
+        setTitle("Thêm sinh viên");
 
         btgSex.add(jrbSex1);
         jrbSex1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

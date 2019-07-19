@@ -56,8 +56,8 @@ public class School {
         ClassRoom result = new ClassRoom();
         if (!nameClass.equals("")) {
             for (ClassRoom cr : this.listRoom) {
-                boolean checkName = cr.checkNameClass(cr.getName());
-                System.out.print(checkName);
+                boolean checkName = cr.checkNameClass(nameClass);
+//                System.out.print(checkName);
                 if (checkName) {
                     result = cr;
                 }
@@ -84,11 +84,11 @@ public class School {
         this.listRoomCourse = listRoomCourse;
     }
 
-    public ClassRoomCourse getClassRoomCourse(String className) {
+    public ClassRoomCourse getClassRoomCourse(String className, String idCourse) {
         ClassRoomCourse result = new ClassRoomCourse();
         if (this.listRoomCourse.size() > 0) {
             for (ClassRoomCourse crc : this.listRoomCourse) {
-                if (crc.checkClassName(className)) {
+                if (crc.checkClassName(className,idCourse)) {
                     result = crc;
                 }
             }
@@ -96,5 +96,13 @@ public class School {
 
         return result;
     }
-
+    
+    public void setClassRoomCourse(String className, String idCourse, ClassRoomCourse _crc) {
+        for (ClassRoomCourse crc : this.listRoomCourse) {
+            if(crc.checkClassName(className, idCourse)) {
+                int _index = this.listRoomCourse.indexOf(crc);
+                this.listRoomCourse.set(_index, _crc);
+            }
+        }
+    }
 }
