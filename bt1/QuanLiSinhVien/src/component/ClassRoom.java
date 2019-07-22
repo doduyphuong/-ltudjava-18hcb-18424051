@@ -42,7 +42,7 @@ public class ClassRoom {
     }
 
     public void setListStudent(ArrayList<Student> listStudent) {
-        this.listStudent = listStudent;
+        this.listStudent = (ArrayList<Student>) listStudent.clone();
     }
 
     public boolean checkNameClass(String _name) {
@@ -57,7 +57,7 @@ public class ClassRoom {
     }
 
     public void setListCourse(ArrayList<CalenderCourse> listCourse) {
-        this.listCourse = listCourse;
+        this.listCourse = (ArrayList<CalenderCourse>) listCourse.clone();
     }
 
 }

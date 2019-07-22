@@ -39,7 +39,7 @@ public class ClassRoomCourse {
     }
 
     public void setListStudent(ArrayList<Student> listStudent) {
-        this.listStudent = listStudent;
+        this.listStudent = (ArrayList<Student>) listStudent.clone();
     }
 
     public ArrayList<TableScore> getListTableScore() {
@@ -47,7 +47,7 @@ public class ClassRoomCourse {
     }
 
     public void setListTableScore(ArrayList<TableScore> listTableScore) {
-        this.listTableScore = listTableScore;
+        this.listTableScore = (ArrayList<TableScore>) listTableScore.clone();
     }
 
     public int getTotalPass() {
@@ -95,5 +95,9 @@ public class ClassRoomCourse {
             return true;
         }
         return false;
+    }
+    
+    public void addStudent(Student sd) {
+        this.listStudent.add(sd);
     }
 }

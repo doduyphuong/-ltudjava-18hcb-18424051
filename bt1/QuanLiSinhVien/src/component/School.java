@@ -40,6 +40,14 @@ public class School {
             }
         }
     }
+    
+    public void addStudentToClassCourse(String className, String idCourse, Student _sd) {
+        for (ClassRoomCourse crc : this.listRoomCourse) {
+            if (crc.checkClassName(className, idCourse)) {
+                crc.addStudent(_sd);
+            }
+        }
+    }
 
     public ArrayList<ClassRoom> getListRoom() {
         return listRoom;
@@ -81,7 +89,7 @@ public class School {
     }
 
     public void setListRoomCourse(ArrayList<ClassRoomCourse> listRoomCourse) {
-        this.listRoomCourse = listRoomCourse;
+        this.listRoomCourse = (ArrayList<ClassRoomCourse>) listRoomCourse.clone();
     }
 
     public ClassRoomCourse getClassRoomCourse(String className, String idCourse) {

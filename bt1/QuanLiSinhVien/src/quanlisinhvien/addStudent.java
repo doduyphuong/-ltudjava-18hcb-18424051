@@ -6,12 +6,12 @@
 package quanlisinhvien;
 
 import component.ClassRoom;
+import component.ClassRoomCourse;
 import component.Student;
-import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static quanlisinhvien.manageClassRoom.school;
-
 
 /**
  *
@@ -19,7 +19,8 @@ import static quanlisinhvien.manageClassRoom.school;
  */
 public class addStudent extends javax.swing.JDialog {
 
-    private String className;
+    private String className = "", idCourse = "";
+
     /**
      * Creates new form add
      */
@@ -32,6 +33,17 @@ public class addStudent extends javax.swing.JDialog {
         this.className = _className;
         initComponents();
         init();
+        String title = "Thêm Mới Học Sinh " + _className;
+        this.jLabel5.setText(title);
+    }
+
+    public addStudent(String _className, String _idCourse) {
+        this.className = _className;
+        this.idCourse = _idCourse;
+        initComponents();
+        init();
+        String title = "Thêm Mới Học Sinh " + _className + "-" + _idCourse;
+        this.jLabel5.setText(title);
     }
 
     private void init() {
@@ -43,7 +55,11 @@ public class addStudent extends javax.swing.JDialog {
 //            String _name = cr.getName();
 //            model.addElement(_name);
 //        }
-        model.addElement(this.className);
+        if (this.idCourse.equals("")) {
+            model.addElement(this.className);
+        } else {
+            model.addElement(this.className + '-' + this.idCourse);
+        }
         jcbClass.setModel(model);
     }
 
@@ -97,6 +113,8 @@ public class addStudent extends javax.swing.JDialog {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Thêm Mới Học Sinh");
+        jLabel5.setToolTipText("");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jbtAddStudent.setText("Thêm");
         jbtAddStudent.addActionListener(new java.awt.event.ActionListener() {
@@ -115,43 +133,36 @@ public class addStudent extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtAddStudent)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(60, 60, 60)
-                        .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(145, 145, 145)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                        .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addComponent(jtfMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                        .addComponent(jtfMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jtfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jtfCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jrbSex1)
-                                        .addGap(51, 51, 51)
-                                        .addComponent(jrbSex2)))))
-                        .addGap(79, 79, 79))))
+                                .addGap(10, 10, 10)
+                                .addComponent(jrbSex1)
+                                .addGap(51, 51, 51)
+                                .addComponent(jrbSex2)))))
+                .addGap(113, 113, 113))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jbtAddStudent)
+                .addGap(65, 65, 65))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcbClass, jtfCMND, jtfMSSV, jtfName});
@@ -184,9 +195,9 @@ public class addStudent extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jcbClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcbClass, jtfCMND, jtfMSSV, jtfName});
@@ -208,21 +219,25 @@ public class addStudent extends javax.swing.JDialog {
         }
 
         if (jrbSex2.isSelected()) {
-            sex = 0;
+            sex = 1;
         }
 
         boolean validate = this.validateForm();
         if (!validate) {
             String nameClass = String.valueOf(jcbClass.getItemAt(jcbClass.getSelectedIndex()));
             Student sd = new Student(mssv, name, sex, cmnd);
-            school.addStudentToClass(nameClass, sd);
+
+            if (this.idCourse.equals("")) {
+                school.addStudentToClass(nameClass, sd);
+            } else {
+                school.addStudentToClassCourse(this.className, this.idCourse, sd);
+            }
+
             JOptionPane.showMessageDialog(null, "Thêm học sinh thành công.");
             jtfMSSV.setText("");
             jtfName.setText("");
             jtfCMND.setText("");
         }
-
-
     }//GEN-LAST:event_jbtAddStudentActionPerformed
 
     private boolean validateForm() {
@@ -231,6 +246,24 @@ public class addStudent extends javax.swing.JDialog {
         String name = jtfName.getText();
         String cmnd = jtfCMND.getText();
         StringBuilder msgErr = new StringBuilder();
+
+        if (this.idCourse.equals("")) {
+            ClassRoom classRoom = school.getClassRoom(this.className);
+            for (Student student : classRoom.getListStudent()) {
+                if (student.checkMSSV(mssv)) {
+                    msgErr.append("MSSV đã tồn tại.");
+                    msgErr.append("\n");
+                }
+            }
+        } else {
+            ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
+            for (Student student : classRoomCourse.getListStudent()) {
+                if (student.checkMSSV(mssv)) {
+                    msgErr.append("MSSV đã tồn tại.");
+                    msgErr.append("\n");
+                }
+            }
+        }
 
         if (mssv.equals("")) {
             validate = true;
@@ -251,7 +284,7 @@ public class addStudent extends javax.swing.JDialog {
 
         }
 
-        if (!jrbSex1.isSelected() || !jrbSex1.isSelected()) {
+        if (jrbSex1.isSelected() == false && jrbSex2.isSelected() == false) {
             validate = true;
             msgErr.append("Vui lòng chọn giới tính");
             msgErr.append("\n");

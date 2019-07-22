@@ -75,4 +75,13 @@ public class Student {
         this.CMND = CMND;
     }
     
+    public boolean checkMSSV(String _mssv) {
+        boolean result = false;
+        
+        if(this.MSSV.equalsIgnoreCase(_mssv)) {
+            result = true;
+        }
+        
+        return result;
+    }
 }

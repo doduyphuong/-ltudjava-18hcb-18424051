@@ -14,6 +14,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import static quanlisinhvien.manageClassRoom.school;
 
@@ -26,7 +29,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private String className = "", idCourse = "";
     manageCalenderCourse mcc;
     private final int FILE_OPEN = 1;
-
+    addStudent a;
+    
     private final String[] columnNamesStudent = {
         "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
     };
@@ -37,17 +41,13 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 
     /**
      * Creates new form manageClassRoomCourse
-     *
-     * @param _mcc
-     * @param _className
-     * @param _idCourse
      */
     public manageClassRoomCourse() {
         initComponents();
         initLayout(this.columnNamesStudent, 0);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
-        this.setTitle(this.className+"-"+this.idCourse);
+        this.setTitle(this.className + "-" + this.idCourse);
     }
 
     public manageClassRoomCourse(manageCalenderCourse _mcc, String _className, String _idCourse) {
@@ -59,10 +59,10 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesStudent, 0);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
-        this.setTitle(this.className+"-"+this.idCourse);
+        this.setTitle(this.className + "-" + this.idCourse);
 
         this.mcc.setVisible(false);
-        
+
     }
 
     /**
@@ -90,6 +90,9 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jtfPercentFail = new javax.swing.JTextField();
         jtfPercentPass = new javax.swing.JTextField();
+        jbtRemove = new javax.swing.JButton();
+        jbtAddStudent = new javax.swing.JButton();
+        jbtUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,27 +212,60 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jbtRemove.setText("Xóa");
+        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveActionPerformed(evt);
+            }
+        });
+
+        jbtAddStudent.setText("Thêm SV");
+        jbtAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddStudentActionPerformed(evt);
+            }
+        });
+
+        jbtUpdate.setText("Cập nhật DS");
+        jbtUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnImportTableScore)
-                        .addGap(659, 659, 659))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtUpdate)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                         .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbtViewListStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbtViewTableScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(81, 81, 81)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbtAddStudent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtRemove))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtViewListStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtViewTableScore))))
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbtViewListStudent, jbtViewTableScore});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -240,12 +276,16 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                             .addComponent(jbtViewListStudent)
                             .addComponent(jbtnBack))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtViewTableScore))
+                        .addComponent(jbtViewTableScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnImportTableScore)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnImportTableScore)
+                    .addComponent(jbtRemove)
+                    .addComponent(jbtAddStudent)
+                    .addComponent(jbtUpdate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
         );
 
         pack();
@@ -256,12 +296,17 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesStudent, 0);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
+        jbtAddStudent.setVisible(true);
+        jbtUpdate.setVisible(true);
     }//GEN-LAST:event_jbtViewListStudentActionPerformed
 
     private void jbtViewTableScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewTableScoreActionPerformed
         initLayout(this.columnNamesTableScore, 1);
         jbtnImportTableScore.setVisible(true);
         jPanelStatistic.setVisible(true);
+        jbtRemove.setVisible(false);
+        jbtAddStudent.setVisible(false);
+        jbtUpdate.setVisible(false);
     }//GEN-LAST:event_jbtViewTableScoreActionPerformed
 
     private void jbtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
@@ -273,7 +318,59 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         operateFile("Choose file import", FILE_OPEN);
     }//GEN-LAST:event_jbtnImportTableScoreActionPerformed
 
+    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+        int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (res == JOptionPane.YES_OPTION) {
+            int selectRow = jTableClassCourse.getSelectedRow();
+            System.out.println(selectRow);
+            String _mssv = (String) jTableClassCourse.getValueAt(selectRow, 1);
+            System.out.println(_mssv);
+            boolean removeStatus = removeStudent(_mssv);
+            if (removeStatus) {
+                JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
+                initLayout(this.columnNamesStudent, 0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa không thành công ", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+
+    }//GEN-LAST:event_jbtRemoveActionPerformed
+
+    private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
+        a = new addStudent(this.className, this.idCourse);
+        a.setVisible(true);
+    }//GEN-LAST:event_jbtAddStudentActionPerformed
+
+    private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed
+        initLayout(this.columnNamesStudent, 0);
+    }//GEN-LAST:event_jbtUpdateActionPerformed
+
+    private boolean removeStudent(String _mssv) {
+        boolean result = false;
+        ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
+        ArrayList<Student> listStudent = new ArrayList<Student>();
+        listStudent = classRoomCourse.getListStudent();
+
+        int _index = -1;
+        for (Student student : listStudent) {
+            if (student.checkMSSV(_mssv)) {
+                result = true;
+                _index = listStudent.indexOf(student);
+            }
+        }
+
+        if (result) {
+            listStudent.remove(_index);
+            classRoomCourse.setListStudent(listStudent);
+            school.setClassRoomCourse(this.className, this.idCourse, classRoomCourse);
+        }
+
+        return result;
+    }
+
     private void initLayout(String[] _columnName, int type) {
+        jbtRemove.setVisible(false);
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(_columnName);
         jTableClassCourse.setModel(tableModel);
@@ -300,8 +397,14 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                 }
 
                 jTableClassCourse.setModel(tableModel);
+                jTableClassCourse.getSelectionModel().addListSelectionListener(
+                        new ListSelectionListener() {
+                            public void valueChanged(ListSelectionEvent lse) {
+                                jbtRemove.setVisible(true);
+                            }
+                        }
+                );
             }
-
         }
 
         if (type == 1) {
@@ -329,7 +432,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void operateFile(String title, int type) {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle(title);
@@ -363,7 +466,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
             while ((line = br.readLine()) != null) {
                 String[] _tableScore = line.split(",");
-                
+
                 // Tạo một thời khóa biểu cho môn học
                 TableScore tbScore = new TableScore();
                 Student sd = new Student(_tableScore[0], _tableScore[1]);
@@ -375,7 +478,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 
                 listTableScore.add(tbScore);
             }
-            
+
             classRoomCourse.setListTableScore(listTableScore);
             school.setClassRoomCourse(this.className, this.idCourse, classRoomCourse);
             br.close();
@@ -385,6 +488,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -429,6 +533,9 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelStatistic;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassCourse;
+    private javax.swing.JButton jbtAddStudent;
+    private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtUpdate;
     private javax.swing.JButton jbtViewListStudent;
     private javax.swing.JButton jbtViewTableScore;
     private javax.swing.JButton jbtnBack;
