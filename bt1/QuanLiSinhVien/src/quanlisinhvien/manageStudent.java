@@ -201,8 +201,13 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtExportActionPerformed
 
     private void jbAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddStudentActionPerformed
-        a = new addStudent(this.className);
-        a.setVisible(true);
+        if (this.a == null) {
+            this.a = new addStudent(this.className);
+            this.a.setVisible(true);
+        } else {
+            this.a.setVisible(true);
+        }
+
     }//GEN-LAST:event_jbAddStudentActionPerformed
 
     private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed

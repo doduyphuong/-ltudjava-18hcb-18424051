@@ -20,7 +20,6 @@ import static quanlisinhvien.manageClassRoom.school;
 public class addStudent extends javax.swing.JDialog {
 
     private String className = "", idCourse = "";
-
     /**
      * Creates new form add
      */
@@ -328,7 +327,6 @@ public class addStudent extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
                 new addStudent().setVisible(true);
             }
         });

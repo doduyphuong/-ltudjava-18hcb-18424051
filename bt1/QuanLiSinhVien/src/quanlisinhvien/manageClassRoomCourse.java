@@ -14,9 +14,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import static quanlisinhvien.manageClassRoom.school;
 
@@ -30,7 +27,9 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     manageCalenderCourse mcc;
     private final int FILE_OPEN = 1;
     addStudent a;
-    
+    updateScoreStudent uScoreStudent;
+    private int type = 0;
+
     private final String[] columnNamesStudent = {
         "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
     };
@@ -44,7 +43,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
      */
     public manageClassRoomCourse() {
         initComponents();
-        initLayout(this.columnNamesStudent, 0);
+        initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
         this.setTitle(this.className + "-" + this.idCourse);
@@ -54,15 +53,15 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         this.className = _className;
         this.idCourse = _idCourse;
         this.mcc = _mcc;
+        this.type = 0;
 
         initComponents();
-        initLayout(this.columnNamesStudent, 0);
+        initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
         this.setTitle(this.className + "-" + this.idCourse);
 
         this.mcc.setVisible(false);
-
     }
 
     /**
@@ -90,17 +89,18 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jtfPercentFail = new javax.swing.JTextField();
         jtfPercentPass = new javax.swing.JTextField();
-        jbtRemove = new javax.swing.JButton();
+        jbtRemoveUpdate = new javax.swing.JButton();
         jbtAddStudent = new javax.swing.JButton();
         jbtUpdate = new javax.swing.JButton();
+        jbtReload = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTableClassCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"123", "123", "123", "123"},
                 {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
+                {"asd", "asd", "sad", null},
                 {null, null, null, null}
             },
             new String [] {
@@ -212,10 +212,10 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jbtRemove.setText("Xóa");
-        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+        jbtRemoveUpdate.setText("Xóa");
+        jbtRemoveUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveActionPerformed(evt);
+                jbtRemoveUpdateActionPerformed(evt);
             }
         });
 
@@ -233,6 +233,13 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         });
 
+        jbtReload.setText("Reload");
+        jbtReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtReloadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,6 +251,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                         .addComponent(jbtnImportTableScore)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtReload)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnBack)
@@ -254,7 +263,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbtAddStudent)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtRemove))
+                        .addComponent(jbtRemoveUpdate))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,10 +290,11 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnImportTableScore)
-                    .addComponent(jbtRemove)
+                    .addComponent(jbtRemoveUpdate)
                     .addComponent(jbtAddStudent)
-                    .addComponent(jbtUpdate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jbtUpdate)
+                    .addComponent(jbtReload))
+                .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
         );
 
@@ -293,18 +303,21 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtViewListStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewListStudentActionPerformed
-        initLayout(this.columnNamesStudent, 0);
+        this.type = 0;
+        initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
         jbtAddStudent.setVisible(true);
         jbtUpdate.setVisible(true);
+        jbtRemoveUpdate.setText("Xóa");
     }//GEN-LAST:event_jbtViewListStudentActionPerformed
 
     private void jbtViewTableScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewTableScoreActionPerformed
-        initLayout(this.columnNamesTableScore, 1);
+        this.type = 1;
+        initLayout(this.columnNamesTableScore);
         jbtnImportTableScore.setVisible(true);
         jPanelStatistic.setVisible(true);
-        jbtRemove.setVisible(false);
+        jbtRemoveUpdate.setText("Sửa");
         jbtAddStudent.setVisible(false);
         jbtUpdate.setVisible(false);
     }//GEN-LAST:event_jbtViewTableScoreActionPerformed
@@ -318,33 +331,51 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         operateFile("Choose file import", FILE_OPEN);
     }//GEN-LAST:event_jbtnImportTableScoreActionPerformed
 
-    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (res == JOptionPane.YES_OPTION) {
-            int selectRow = jTableClassCourse.getSelectedRow();
-            System.out.println(selectRow);
+    private void jbtRemoveUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveUpdateActionPerformed
+        int selectRow = jTableClassCourse.getSelectedRow();
+        if (selectRow >= 0) {
             String _mssv = (String) jTableClassCourse.getValueAt(selectRow, 1);
-            System.out.println(_mssv);
-            boolean removeStatus = removeStudent(_mssv);
-            if (removeStatus) {
-                JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
-                initLayout(this.columnNamesStudent, 0);
+            if (this.type == 0) {
+                int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (res == JOptionPane.YES_OPTION) {
+                    boolean removeStatus = removeStudent(_mssv);
+                    if (removeStatus) {
+                        JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
+                        initLayout(this.columnNamesStudent);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Xóa không thành công ", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Xóa không thành công ", "Error", JOptionPane.ERROR_MESSAGE);
+                if (this.uScoreStudent == null) {
+                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
+                    this.uScoreStudent.setVisible(true);
+                } else {
+                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
+                    this.uScoreStudent.setVisible(true);
+                }
             }
-
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
-
-    }//GEN-LAST:event_jbtRemoveActionPerformed
+    }//GEN-LAST:event_jbtRemoveUpdateActionPerformed
 
     private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
-        a = new addStudent(this.className, this.idCourse);
-        a.setVisible(true);
+        if (this.a == null) {
+            this.a = new addStudent(this.className, this.idCourse);
+            this.a.setVisible(true);
+        } else {
+            this.a.setVisible(true);
+        }
     }//GEN-LAST:event_jbtAddStudentActionPerformed
 
     private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed
-        initLayout(this.columnNamesStudent, 0);
+        initLayout(this.columnNamesStudent);
     }//GEN-LAST:event_jbtUpdateActionPerformed
+
+    private void jbtReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtReloadActionPerformed
+        initLayout(this.columnNamesTableScore);
+    }//GEN-LAST:event_jbtReloadActionPerformed
 
     private boolean removeStudent(String _mssv) {
         boolean result = false;
@@ -369,15 +400,14 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         return result;
     }
 
-    private void initLayout(String[] _columnName, int type) {
-        jbtRemove.setVisible(false);
+    private void initLayout(String[] _columnName) {
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(_columnName);
         jTableClassCourse.setModel(tableModel);
         ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
         int stt = 1;
 
-        if (type == 0) {
+        if (this.type == 0) {
             ArrayList<Student> listStudent = classRoomCourse.getListStudent();
             if (listStudent.size() > 0) {
                 for (Student student : listStudent) {
@@ -397,17 +427,10 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                 }
 
                 jTableClassCourse.setModel(tableModel);
-                jTableClassCourse.getSelectionModel().addListSelectionListener(
-                        new ListSelectionListener() {
-                            public void valueChanged(ListSelectionEvent lse) {
-                                jbtRemove.setVisible(true);
-                            }
-                        }
-                );
             }
         }
 
-        if (type == 1) {
+        if (this.type == 1) {
             ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
             if (listTableScore.size() > 0) {
                 for (TableScore ts : listTableScore) {
@@ -483,7 +506,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             school.setClassRoomCourse(this.className, this.idCourse, classRoomCourse);
             br.close();
 
-            initLayout(this.columnNamesTableScore, 1);
+            initLayout(this.columnNamesTableScore);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -534,7 +557,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassCourse;
     private javax.swing.JButton jbtAddStudent;
-    private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtReload;
+    private javax.swing.JButton jbtRemoveUpdate;
     private javax.swing.JButton jbtUpdate;
     private javax.swing.JButton jbtViewListStudent;
     private javax.swing.JButton jbtViewTableScore;
