@@ -16,9 +16,12 @@ public class School {
     private int numClass;
     private ArrayList<ClassRoom> listRoom = new ArrayList<ClassRoom>();
     private ArrayList<ClassRoomCourse> listRoomCourse = new ArrayList<ClassRoomCourse>();
+    private ArrayList<Account> listAccount = new ArrayList<Account>();
 
     public School() {
         this.numClass = 0;
+        Account account = new Account("giaovu", "giaovu", 1);
+        this.listAccount.add(account);
     }
 
     public int getNumClass() {
@@ -113,4 +116,13 @@ public class School {
             }
         }
     }
+
+    public ArrayList<Account> getListAccount() {
+        return listAccount;
+    }
+
+    public void setListAccount(ArrayList<Account> listAccount) {
+        this.listAccount = (ArrayList<Account>) listAccount.clone();
+    }
+    
 }

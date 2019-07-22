@@ -9,9 +9,9 @@ import component.ClassRoom;
 import component.ClassRoomCourse;
 import component.Student;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static quanlisinhvien.manageClassRoom.school;
+import static quanlisinhvien.Login.school;
+
 
 /**
  *

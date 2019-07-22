@@ -6,7 +6,6 @@
 package quanlisinhvien;
 
 import component.ClassRoom;
-import component.School;
 import component.Student;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +15,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static quanlisinhvien.Login.school;
 
 /**
  *
@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class manageClassRoom extends javax.swing.JFrame {
 
     private final int FILE_OPEN = 1;
-    static School school = new School();
+    
     private String[] columnNames = {
         "STT", "Lớp học", "Số sinh viên"
     };

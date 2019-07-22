@@ -10,7 +10,7 @@ import component.TableScore;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import static quanlisinhvien.manageClassRoom.school;
+import static quanlisinhvien.Login.school;
 
 /**
  *

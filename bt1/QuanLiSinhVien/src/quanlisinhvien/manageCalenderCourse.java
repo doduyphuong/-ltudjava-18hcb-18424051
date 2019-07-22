@@ -17,7 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static quanlisinhvien.manageClassRoom.school;
+import static quanlisinhvien.Login.school;
 
 /**
  *
