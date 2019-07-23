@@ -245,16 +245,18 @@ public class manageCalenderCourse extends javax.swing.JFrame {
 //                String[] _className = line.split(",");
 
             ArrayList<ClassRoomCourse> listRoomCourse = new ArrayList<ClassRoomCourse>();
+            
             ClassRoom cr = new ClassRoom();
             cr = school.getClassRoom(className);
-
+            cr.getListCourse().clear();
             while ((line = br.readLine()) != null) {
                 String[] _calenderCourse = line.split(",");
 
                 // Tạo một thời khóa biểu cho môn học
                 Course course = new Course(_calenderCourse[0], _calenderCourse[1]);
                 CalenderCourse calenderCourse = new CalenderCourse(course, _calenderCourse[2]);
-
+                
+                
                 cr.addCalenderCourse(calenderCourse);
                 ClassRoomCourse crc = new ClassRoomCourse();
                 crc.setClassName(className);

@@ -491,6 +491,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 
             ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
             ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
+            listTableScore.clear();
             while ((line = br.readLine()) != null) {
                 String[] _tableScore = line.split(",");
 

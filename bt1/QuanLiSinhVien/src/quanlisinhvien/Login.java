@@ -119,13 +119,13 @@ public class Login extends javax.swing.JFrame {
             jtfUsername.setText("");
             jtfPasswd.setText("");
             if (account.getRole() == 1) {
-                JOptionPane.showMessageDialog(null, "Giao vu login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Giao vu login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
                 manageClassRoom mClassRoom = new manageClassRoom(this);
                 mClassRoom.setVisible(true);
             }
 
             if (account.getRole() == 0) {
-                JOptionPane.showMessageDialog(null, "Sinh vien login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Sinh vien login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
                 studentLayout sLayout = new studentLayout(this);
                 sLayout.setVisible(true);
             }
