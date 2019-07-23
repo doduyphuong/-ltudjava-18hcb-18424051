@@ -84,6 +84,7 @@ public class updateScoreStudent extends javax.swing.JDialog {
                 jtfDiemTong.setEditable(false);
                 jbtUpdate.setVisible(false);
                 
+                this.jLabel5.setText("ĐIỂM MÔN HỌC");
                 jtfMSSV.setText(this.tbScore.getSd().getMSSV());
                 jtfName.setText(this.tbScore.getSd().getName());
                 jtfDiemGK.setText(String.valueOf(this.tbScore.getScoreMiddleTest()));
