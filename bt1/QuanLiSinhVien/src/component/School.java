@@ -120,9 +120,32 @@ public class School {
     public ArrayList<Account> getListAccount() {
         return listAccount;
     }
+    
+    public ArrayList<ClassRoomCourse> getListClassRoomCourse(String _className) {
+        ArrayList<ClassRoomCourse> result = new ArrayList<ClassRoomCourse>();
+        
+        for(ClassRoomCourse crc : this.listRoomCourse) {
+            if(crc.getClassName().equals(_className)) {
+                result.add(crc);
+            }
+        }
+        
+        return result;
+    }
 
     public void setListAccount(ArrayList<Account> listAccount) {
         this.listAccount = (ArrayList<Account>) listAccount.clone();
     }
     
+    public boolean checkAccountExist(String _username) {
+        boolean result = false;
+        
+           for(Account account : this.listAccount) {
+               if(account.checkUsername(_username)) {
+                   result = true;
+               }
+           }
+        
+        return result;
+    }
 }

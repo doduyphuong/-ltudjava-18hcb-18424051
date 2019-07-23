@@ -46,6 +46,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
+        jbtReload.setVisible(false);
         this.setTitle(this.className + "-" + this.idCourse);
     }
 
@@ -59,6 +60,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
+        jbtReload.setVisible(false);
         this.setTitle(this.className + "-" + this.idCourse);
 
         this.mcc.setVisible(false);
@@ -307,6 +309,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesStudent);
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
+        this.jbtReload.setVisible(false);
         jbtAddStudent.setVisible(true);
         jbtUpdate.setVisible(true);
         jbtRemoveUpdate.setText("Xóa");
@@ -317,6 +320,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesTableScore);
         jbtnImportTableScore.setVisible(true);
         jPanelStatistic.setVisible(true);
+        this.jbtReload.setVisible(true);
         jbtRemoveUpdate.setText("Sửa");
         jbtAddStudent.setVisible(false);
         jbtUpdate.setVisible(false);

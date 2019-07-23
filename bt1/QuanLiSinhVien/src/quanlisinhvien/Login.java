@@ -115,8 +115,20 @@ public class Login extends javax.swing.JFrame {
 
     private void jbtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLoginActionPerformed
         boolean validate = validateForm();
-        if(!validate) {
-            JOptionPane.showMessageDialog(null, "Login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (!validate) {
+            jtfUsername.setText("");
+            jtfPasswd.setText("");
+            if (account.getRole() == 1) {
+                JOptionPane.showMessageDialog(null, "Giao vu login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+                manageClassRoom mClassRoom = new manageClassRoom(this);
+                mClassRoom.setVisible(true);
+            }
+
+            if (account.getRole() == 0) {
+                JOptionPane.showMessageDialog(null, "Sinh vien login thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+                studentLayout sLayout = new studentLayout(this);
+                sLayout.setVisible(true);
+            }
         }
     }//GEN-LAST:event_jbtLoginActionPerformed
 
@@ -143,15 +155,17 @@ public class Login extends javax.swing.JFrame {
             for (Account _account : listAccount) {
                 if (_account.getUsername().equals(username) && _account.getPasswd().equals(passwd)) {
                     account = _account;
+                    validate = false;
+                    break;
                 } else {
-                    msgErr.append("Tên đăng nhập hoặc mật khẩu chưa đúng.");
-                    msgErr.append("\n");
                     validate = true;
                 }
             }
         }
 
         if (validate == true) {
+            msgErr.append("Tên đăng nhập hoặc mật khẩu chưa đúng.");
+            msgErr.append("\n");
             JOptionPane.showMessageDialog(null, msgErr, "Error", JOptionPane.ERROR_MESSAGE);
         }
 

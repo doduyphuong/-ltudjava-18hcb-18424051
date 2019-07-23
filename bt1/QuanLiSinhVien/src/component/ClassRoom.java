@@ -59,5 +59,17 @@ public class ClassRoom {
     public void setListCourse(ArrayList<CalenderCourse> listCourse) {
         this.listCourse = (ArrayList<CalenderCourse>) listCourse.clone();
     }
+    
+    public Student getStudentInClass(String _mssv) {
+        Student sd = null;
+        
+        for(Student _sd : this.listStudent) {
+            if(_sd.checkMSSV(_mssv)) {
+                sd = _sd;
+            }
+        }
+        
+        return sd;
+    }
 
 }

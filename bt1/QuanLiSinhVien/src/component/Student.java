@@ -62,6 +62,14 @@ public class Student {
     public int getSex() {
         return Sex;
     }
+    
+    public String getStringSex() {
+        if(this.Sex == 0) {
+            return "Nam";
+        }
+        
+        return "Nữ";
+    }
 
     public void setSex(int Sex) {
         this.Sex = Sex;

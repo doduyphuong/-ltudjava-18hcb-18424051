@@ -5,6 +5,7 @@
  */
 package quanlisinhvien;
 
+import component.Account;
 import component.ClassRoom;
 import component.Student;
 import java.io.BufferedReader;
@@ -24,10 +25,10 @@ import static quanlisinhvien.Login.school;
 public class manageClassRoom extends javax.swing.JFrame {
 
     private final int FILE_OPEN = 1;
-    
     private String[] columnNames = {
         "STT", "Lớp học", "Số sinh viên"
     };
+    Login lg;
 
     /**
      * Creates new form manageClassRoom
@@ -35,6 +36,13 @@ public class manageClassRoom extends javax.swing.JFrame {
     public manageClassRoom() {
         initComponents();
         initLayout();
+    }
+
+    public manageClassRoom(Login _lg) {
+        this.lg = _lg;
+        initComponents();
+        initLayout();
+        this.lg.setVisible(false);
     }
 
     private void initLayout() {
@@ -100,8 +108,12 @@ public class manageClassRoom extends javax.swing.JFrame {
                 boolean checkExist = true;
                 if (cr.checkNameClass("")) {
                     checkExist = false;
-                    cr.setName(_className[0]);
+                    
+                } else {
+                    cr = new ClassRoom();
                 }
+                
+                cr.setName(_className[0]);
 
                 // Lấy filter name
 //            line = br.readLine();
@@ -122,6 +134,10 @@ public class manageClassRoom extends javax.swing.JFrame {
 
                     student.setSex(sex);
                     cr.addStudent(student);
+                    if (!school.checkAccountExist(inforStudent[0])) {
+                        Account _account = new Account(inforStudent[0], inforStudent[0], _className[0]);
+                        school.getListAccount().add(_account);
+                    }
                 }
 
                 if (checkExist == false) {
@@ -153,6 +169,7 @@ public class manageClassRoom extends javax.swing.JFrame {
         jbtImport = new javax.swing.JButton();
         jcbClassRoom = new javax.swing.JComboBox();
         jbtViewClass = new javax.swing.JButton();
+        jbtLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý lớp học");
@@ -186,31 +203,39 @@ public class manageClassRoom extends javax.swing.JFrame {
             }
         });
 
+        jbtLogout.setText("Logout");
+        jbtLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtImport)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jcbClassRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtViewClass)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbtLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jbtImport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtLogout)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbClassRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtViewClass))
+                    .addComponent(jbtViewClass)
+                    .addComponent(jbtImport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -233,6 +258,11 @@ public class manageClassRoom extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jbtViewClassActionPerformed
+
+    private void jbtLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLogoutActionPerformed
+        this.lg.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +303,7 @@ public class manageClassRoom extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassRoom;
     private javax.swing.JButton jbtImport;
+    private javax.swing.JButton jbtLogout;
     private javax.swing.JButton jbtViewClass;
     private javax.swing.JComboBox jcbClassRoom;
     // End of variables declaration//GEN-END:variables
