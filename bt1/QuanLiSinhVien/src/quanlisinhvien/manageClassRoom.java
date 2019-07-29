@@ -16,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static quanlisinhvien.Login.account;
 import static quanlisinhvien.Login.school;
 
 /**
@@ -164,12 +165,23 @@ public class manageClassRoom extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableClassRoom = new javax.swing.JTable();
         jbtImport = new javax.swing.JButton();
         jcbClassRoom = new javax.swing.JComboBox();
         jbtViewClass = new javax.swing.JButton();
         jbtLogout = new javax.swing.JButton();
+        jPanelChangePasswd = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jpfPasswdOld = new javax.swing.JPasswordField();
+        jpfPasswdNew = new javax.swing.JPasswordField();
+        jpfPasswdAgaint = new javax.swing.JPasswordField();
+        jbtChangePass = new javax.swing.JButton();
+        jbtChangePasswd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý lớp học");
@@ -210,32 +222,115 @@ public class manageClassRoom extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Đổi mật khẩu");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setText("Mật khẩu củ:");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel9.setText("Mật khẩu mới:");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setText("Xác nhận lại MK:");
+
+        jbtChangePass.setText("Thay đổi");
+        jbtChangePass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtChangePassActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelChangePasswdLayout = new javax.swing.GroupLayout(jPanelChangePasswd);
+        jPanelChangePasswd.setLayout(jPanelChangePasswdLayout);
+        jPanelChangePasswdLayout.setHorizontalGroup(
+            jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelChangePasswdLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelChangePasswdLayout.createSequentialGroup()
+                .addContainerGap(72, Short.MAX_VALUE)
+                .addGroup(jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jpfPasswdNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpfPasswdOld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpfPasswdAgaint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(jbtChangePass)
+                .addGap(72, 72, 72))
+        );
+
+        jPanelChangePasswdLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jpfPasswdAgaint, jpfPasswdNew, jpfPasswdOld});
+
+        jPanelChangePasswdLayout.setVerticalGroup(
+            jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelChangePasswdLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jpfPasswdOld, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel9)
+                    .addComponent(jpfPasswdNew, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtChangePass))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelChangePasswdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jpfPasswdAgaint, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)))
+        );
+
+        jPanelChangePasswdLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jpfPasswdAgaint, jpfPasswdNew, jpfPasswdOld});
+
+        jbtChangePasswd.setText("Đổi MK");
+        jbtChangePasswd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtChangePasswdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jcbClassRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtViewClass)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelChangePasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbtLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbtImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jbtChangePasswd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbtLogout, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtLogout)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbClassRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtViewClass)
-                    .addComponent(jbtImport))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbtLogout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtChangePasswd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcbClassRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtViewClass)
+                            .addComponent(jbtImport)))
+                    .addComponent(jPanelChangePasswd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -263,6 +358,74 @@ public class manageClassRoom extends javax.swing.JFrame {
         this.lg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtLogoutActionPerformed
+
+    private boolean validateForm() {
+        boolean validate = false;
+        String oldPass = jpfPasswdOld.getText();
+        String newPass = jpfPasswdNew.getText();
+        String againtPass = jpfPasswdAgaint.getText();
+        StringBuilder msgErr = new StringBuilder();
+
+        if (oldPass.equals("")) {
+            validate = true;
+            msgErr.append("Vui lòng nhập mật khẩu.");
+            msgErr.append("\n");
+        }
+
+        if (newPass.equals("")) {
+            validate = true;
+            msgErr.append("Vui lòng nhập mật khẩu mới");
+            msgErr.append("\n");
+        }
+
+        if (againtPass.equals("")) {
+            validate = true;
+            msgErr.append("Vui lòng nhập lại mật khẩu");
+            msgErr.append("\n");
+        }
+
+        if (validate == false) {
+            if (!account.getPasswd().equals(oldPass)) {
+                validate = true;
+                msgErr.append("Nhập mật khẩu chưa đúng.");
+                msgErr.append("\n");
+            } else {
+                if (!againtPass.equals(newPass)) {
+                    validate = true;
+                    msgErr.append("Nhập lại mật khẩu chưa đúng.");
+                    msgErr.append("\n");
+                }
+            }
+        }
+
+        if (validate == true) {
+            JOptionPane.showMessageDialog(null, msgErr, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return validate;
+    }
+
+    private void jbtChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtChangePassActionPerformed
+        boolean validate = validateForm();
+        if (!validate) {
+            String username = account.getUsername();
+            String passwd = account.getPasswd();
+            for (Account _account : school.getListAccount()) {
+                if (_account.getUsername().equals(username) && _account.getPasswd().equals(passwd)) {
+                    account.setPasswd(jpfPasswdNew.getText());
+                    school.getListAccount().set(school.getListAccount().indexOf(_account), _account);
+                    break;
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Đổi mật khẩu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            this.lg.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jbtChangePassActionPerformed
+
+    private void jbtChangePasswdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtChangePasswdActionPerformed
+        this.jPanelChangePasswd.setVisible(!this.jPanelChangePasswd.isVisible());
+    }//GEN-LAST:event_jbtChangePasswdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,11 +463,22 @@ public class manageClassRoom extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanelChangePasswd;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassRoom;
+    private javax.swing.JButton jbtChangePass;
+    private javax.swing.JButton jbtChangePasswd;
     private javax.swing.JButton jbtImport;
     private javax.swing.JButton jbtLogout;
     private javax.swing.JButton jbtViewClass;
     private javax.swing.JComboBox jcbClassRoom;
+    private javax.swing.JPasswordField jpfPasswdAgaint;
+    private javax.swing.JPasswordField jpfPasswdNew;
+    private javax.swing.JPasswordField jpfPasswdOld;
     // End of variables declaration//GEN-END:variables
 }
