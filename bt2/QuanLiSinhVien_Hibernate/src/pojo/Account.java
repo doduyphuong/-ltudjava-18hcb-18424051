@@ -19,6 +19,12 @@ public class Account implements java.io.Serializable{
         
     }
     
+    public Account(String maStudent, String passwd, int role) {
+        this.maStudent = maStudent;
+        this.passwd = passwd;
+        this.role = role;
+    }
+    
     public Account(String maStudent, String passwd, String maClass, int role) {
         this.maStudent = maStudent;
         this.passwd = passwd;
