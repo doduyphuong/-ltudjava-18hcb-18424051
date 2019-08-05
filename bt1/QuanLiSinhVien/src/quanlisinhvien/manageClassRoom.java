@@ -47,6 +47,7 @@ public class manageClassRoom extends javax.swing.JFrame {
     }
 
     private void initLayout() {
+        this.jPanelChangePasswd.setVisible(false);
         ArrayList<ClassRoom> listClassRoom = school.getListRoom();
         if (listClassRoom.size() > 0) {
             int stt = 1;
