@@ -8,7 +8,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojo.Student;
+import pojos.Student;
 import util.HibernateUtil;
 
 /**

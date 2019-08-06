@@ -5,6 +5,11 @@
  */
 package quanlisinhvien_hibernate;
 
+import dao.AccountDAO;
+import pojos.Account;
+
+
+
 /**
  *
  * @author CPU12407-local
@@ -16,6 +21,8 @@ public class QuanLiSinhVien_Hibernate {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Account a = AccountDAO.getAccount("giaovu");
+        System.out.println("zzzzzzzzzzz");
     }
     
 }

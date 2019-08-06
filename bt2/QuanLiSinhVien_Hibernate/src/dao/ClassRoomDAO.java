@@ -9,8 +9,8 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pojo.Student;
-import pojo.ClassRoom;
+import pojos.Student;
+import pojos.Classroom;
 import util.HibernateUtil;
 
 /**
