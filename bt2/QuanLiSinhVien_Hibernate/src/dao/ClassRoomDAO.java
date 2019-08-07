@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import pojos.ClassRoom;
 import util.HibernateUtil;
 
@@ -35,12 +36,11 @@ public class ClassRoomDAO {
     }
 
     public static ClassRoom getClassRoom(String maClass) {
-        ClassRoom cr = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-
+        ClassRoom cr = null;
+        
         try {
             cr = (ClassRoom) session.get(ClassRoom.class, maClass);
-
         } catch (HibernateException ex) {
             System.err.println(ex);
         } finally {
@@ -50,4 +50,24 @@ public class ClassRoomDAO {
         return cr;
     }
 
+    public static boolean createClassRoom(ClassRoom cr) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if(ClassRoomDAO.getClassRoom(cr.getMaClass()) != null) {
+            return false;
+        }
+        
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(cr);
+            transaction.commit();
+        } catch(HibernateException ex) {
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return true;
+    }
 }

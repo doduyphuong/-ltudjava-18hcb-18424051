@@ -22,6 +22,13 @@ public class Student implements java.io.Serializable {
         this.cmnd = cmnd;
     }
 
+    public Student(String maStudent, String nameStudent, String cmnd, ClassRoom classRoom) {
+        this.maStudent = maStudent;
+        this.nameStudent = nameStudent;
+        this.cmnd = cmnd;
+        this.classRoom = classRoom;
+    }
+
     public String getMaStudent() {
         return this.maStudent;
     }

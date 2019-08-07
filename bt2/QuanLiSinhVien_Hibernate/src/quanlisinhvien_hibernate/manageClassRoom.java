@@ -7,6 +7,7 @@ package quanlisinhvien_hibernate;
 
 import dao.AccountDAO;
 import dao.ClassRoomDAO;
+import dao.StudentDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojos.Account;
 import pojos.ClassRoom;
+import pojos.Student;
 import static quanlisinhvien_hibernate.Login.account;
 
 /**
@@ -91,72 +93,49 @@ public class manageClassRoom extends javax.swing.JFrame {
             File file = chooser.getSelectedFile();
             switch (type) {
                 case FILE_OPEN:
-//                    readFile(file);
+                    readFile(file);
                     break;
             }
         }
     }
 
-//    private void readFile(File file) {
-//        try {
-//            try (FileReader fr = new FileReader(file)) {
-//                BufferedReader br = new BufferedReader(fr);
-//                String line;
-//                // Lấy tên lớp
-//                line = br.readLine();
-//                String[] _className = line.split(",");
-//
-//                ClassRoom cr;
-//                cr = school.getClassRoom(_className[0]);
-//                boolean checkExist = true;
-//                if (cr.checkNameClass("")) {
-//                    checkExist = false;
-//                    
-//                } else {
-//                    cr = new ClassRoom();
-//                }
-//                
-//                cr.setName(_className[0]);
-//
-//                // Lấy filter name
-////            line = br.readLine();
-////            String[] filterName = line.split(",");
-////            this.columnNames = filterName;
-//                // Lấy thông tin Student
-//                while ((line = br.readLine()) != null) {
-//                    String[] inforStudent = line.split(",");
-//                    Student student = new Student(inforStudent[0], inforStudent[1], inforStudent[3]);
-//                    int sex = -1;
-//                    if (inforStudent[2].equalsIgnoreCase("Nam")) {
-//                        sex = 0;
-//                    }
-//
-//                    if (inforStudent[2].equalsIgnoreCase("Nữ")) {
-//                        sex = 1;
-//                    }
-//
-//                    student.setSex(sex);
-//                    cr.addStudent(student);
-//                    if (!school.checkAccountExist(inforStudent[0])) {
-//                        Account _account = new Account(inforStudent[0], inforStudent[0], _className[0]);
-//                        school.getListAccount().add(_account);
-//                    }
-//                }
-//
-//                if (checkExist == false) {
-//                    school.addClass(cr);
-//                    school.setNumClass(school.getNumClass() + 1);
-//                } else {
-//                    school.setClassRoom(cr, _className[0]);
-//                }
-//
-//                br.close();
-//            }
-//            initLayout();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
+    private void readFile(File file) {
+        try {
+            try (FileReader fr = new FileReader(file)) {
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                // Lấy tên lớp
+                line = br.readLine();
+                String[] _className = line.split(",");
+                ClassRoom cr = ClassRoomDAO.getClassRoom(String.valueOf(_className[0]));
+//                ClassRoom cr = ClassRoomDAO.getClassRoom("17HCB");
+                if(cr == null) {
+                    cr.setMaClass(_className[0]);
+                    ClassRoomDAO.createClassRoom(cr);
+                }
+                
+                // Lấy thông tin Student
+                while ((line = br.readLine()) != null) {
+                    String[] inforStudent = line.split(",");
+                    Student student = new Student(inforStudent[0], inforStudent[1], inforStudent[3], cr);
+                    int sex = -1;
+                    if (inforStudent[2].equalsIgnoreCase("Nam")) {
+                        sex = 0;
+                    }
+
+                    if (inforStudent[2].equalsIgnoreCase("Nữ")) {
+                        sex = 1;
+                    }
+
+                    student.setSex(sex);
+                    StudentDAO.createStudent(student);
+                }
+            }
+            initLayout();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
