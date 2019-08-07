@@ -5,12 +5,11 @@
  */
 package dao;
 
-import java.util.Set;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pojos.Student;
-import pojos.Classroom;
+import pojos.ClassRoom;
 import util.HibernateUtil;
 
 /**
@@ -19,28 +18,36 @@ import util.HibernateUtil;
  */
 public class ClassRoomDAO {
 
-    public static Set<Student> getListStudent(String maClass) {
-        Set<Student> listStudent = null;
+    public static List<ClassRoom> getListClassRoom() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-
+        List<ClassRoom> listClassRoom = null;
         try {
-            String hql = "select sd from Student sd, ClassRoom cr";
-            hql += "where cr.maClass=:maClass and cr.maStudent = sd.maStudent";
+            String hql = "select cr from ClassRoom cr";
             Query query = session.createQuery(hql);
-            query.setString("maClass", maClass);
-            listStudent = (Set<Student>) query.list();
-            
+            listClassRoom = query.list();
         } catch (HibernateException ex) {
             System.err.println(ex);
         } finally {
             session.close();
         }
 
-        return listStudent;
+        return listClassRoom;
     }
-    
-    public static boolean insertStudentInClass() {
-        
-        return true;
+
+    public static ClassRoom getClassRoom(String maClass) {
+        ClassRoom cr = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            cr = (ClassRoom) session.get(ClassRoom.class, maClass);
+
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+
+        return cr;
     }
+
 }

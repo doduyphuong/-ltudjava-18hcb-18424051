@@ -2,7 +2,11 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="quanlysinhvien"/>
-  <table-filter match-name="classroom"/>
   <table-filter match-name="account"/>
   <table-filter match-name="student"/>
+  <table-filter match-name="class_room_course"/>
+  <table-filter match-name="course"/>
+  <table-filter match-name="calender_course"/>
+  <table-filter match-name="table_score"/>
+  <table-filter match-name="class_room"/>
 </hibernate-reverse-engineering>

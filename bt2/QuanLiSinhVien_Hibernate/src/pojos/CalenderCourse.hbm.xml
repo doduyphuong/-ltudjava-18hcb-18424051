@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 7, 2019 9:45:01 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.CalenderCourse" table="calender_course" catalog="quanlysinhvien" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="maCourse" type="string">
+            <column name="MaCourse" length="10" not-null="true" />
+        </property>
+        <property name="maClass" type="string">
+            <column name="MaClass" length="10" not-null="true" />
+        </property>
+        <property name="location" type="string">
+            <column name="Location" length="50" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

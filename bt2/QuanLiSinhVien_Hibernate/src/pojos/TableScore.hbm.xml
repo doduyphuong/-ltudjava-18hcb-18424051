@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 7, 2019 9:45:01 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.TableScore" table="table_score" catalog="quanlysinhvien" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="maClass" type="string">
+            <column name="MaClass" length="10" not-null="true" />
+        </property>
+        <property name="maCourse" type="string">
+            <column name="MaCourse" length="10" not-null="true" />
+        </property>
+        <property name="maStudent" type="string">
+            <column name="MaStudent" length="10" not-null="true" />
+        </property>
+        <property name="scoreMiddleTest" type="java.lang.Double">
+            <column name="ScoreMiddleTest" precision="22" scale="0" />
+        </property>
+        <property name="scoreFinalTest" type="java.lang.Double">
+            <column name="ScoreFinalTest" precision="22" scale="0" />
+        </property>
+        <property name="scoreDifferent" type="java.lang.Double">
+            <column name="ScoreDifferent" precision="22" scale="0" />
+        </property>
+        <property name="finalScore" type="java.lang.Double">
+            <column name="FinalScore" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

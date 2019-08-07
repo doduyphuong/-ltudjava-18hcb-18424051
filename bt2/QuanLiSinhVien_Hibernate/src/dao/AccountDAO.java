@@ -7,6 +7,7 @@ package dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import pojos.Account;
 import util.HibernateUtil;
 
@@ -27,5 +28,26 @@ public class AccountDAO {
             session.close();
         }
         return account;
+    }
+    
+    public static boolean updateAccount(Account a) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if(AccountDAO.getAccount(a.getUserName()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        
+        try {
+            transaction = session.beginTransaction();
+            session.update(a);
+            transaction.commit();
+        } catch(HibernateException ex) {
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return true;
     }
 }

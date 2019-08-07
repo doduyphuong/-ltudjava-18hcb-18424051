@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 7, 2019 9:45:01 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.ClassRoom" table="class_room" catalog="quanlysinhvien" optimistic-lock="version">
+        <id name="maClass" type="string">
+            <column name="MaClass" length="10" />
+            <generator class="assigned" />
+        </id>
+        <set inverse="true" name="listStudent" fetch="select" lazy="false">
+            <key>
+                <column length="10" name="MaClass" not-null="true"></column>
+            </key>
+            <one-to-many class="pojos.Student"></one-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
