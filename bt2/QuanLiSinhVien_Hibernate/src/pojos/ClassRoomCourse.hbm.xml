@@ -17,5 +17,8 @@
         <property name="maStudent" type="string">
             <column name="MaStudent" length="10" not-null="true" />
         </property>
+        <property name="idCalenderCourse" type="java.lang.Integer">
+            <column name="IDCalenderCourse" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

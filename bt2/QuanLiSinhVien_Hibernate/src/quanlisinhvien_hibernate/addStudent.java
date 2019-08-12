@@ -5,11 +5,13 @@
  */
 package quanlisinhvien_hibernate;
 
+import dao.ClassRoomCourseDAO;
 import dao.ClassRoomDAO;
 import dao.StudentDAO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import pojos.ClassRoom;
+import pojos.ClassRoomCourse;
 import pojos.Student;
 
 /**
@@ -228,7 +230,8 @@ public class addStudent extends javax.swing.JDialog {
                 checkCreate = StudentDAO.createStudent(sd);
 
             } else {
-//                school.addStudentToClassCourse(this.className, this.idCourse, sd);
+                ClassRoomCourse crc = new ClassRoomCourse(className, idCourse, mssv);
+                checkCreate = ClassRoomCourseDAO.addStudentInCourse(crc);
             }
 
             if (checkCreate) {

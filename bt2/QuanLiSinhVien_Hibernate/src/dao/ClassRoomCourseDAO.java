@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import pojos.ClassRoomCourse;
 import pojos.Student;
 import util.HibernateUtil;
 
@@ -24,7 +26,7 @@ public class ClassRoomCourseDAO {
         try {
             String hql = "select sd";
             hql += " from ClassRoomCourse crc, Student sd";
-            hql += "where crc.maClass=:maClass and crc.maCourse=:maCourse and crc.maStudent=sd.maStudent";
+            hql += " where crc.maClass=:maClass and crc.maCourse=:maCourse and crc.maStudent=sd.maStudent";
             Query query = session.createQuery(hql);
             query.setParameter("maClass", maClass);
             query.setParameter("maCourse", maCourse);
@@ -36,5 +38,60 @@ public class ClassRoomCourseDAO {
         }
         
         return listStudent;
+    }
+    
+    public static ClassRoomCourse getOneRowToCourse(ClassRoomCourse crc) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        ClassRoomCourse _crc = null;
+        
+        try {
+            _crc = (ClassRoomCourse) session.get(ClassRoomCourse.class, crc);
+        } catch(HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return _crc;
+    }
+    
+    public static boolean addStudentInCourse(ClassRoomCourse crc) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if(ClassRoomCourseDAO.getOneRowToCourse(crc) != null) {
+            return false;
+        }
+        
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(crc);
+            transaction.commit();
+        } catch (HibernateException ex) {
+           System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return true;
+    }
+    
+    public static boolean deleteStudentOutCourse(ClassRoomCourse crc) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if(ClassRoomCourseDAO.getOneRowToCourse(crc) == null) {
+            return false;
+        }
+        
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            session.delete(crc);
+            transaction.commit();;
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return true;
     }
 }

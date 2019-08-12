@@ -5,13 +5,17 @@
  */
 package quanlisinhvien_hibernate;
 
+import dao.ClassRoomCourseDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pojos.ClassRoomCourse;
+import pojos.Student;
 
 /**
  *
@@ -332,21 +336,22 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnImportTableScoreActionPerformed
 
     private void jbtRemoveUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveUpdateActionPerformed
-//        int selectRow = jTableClassCourse.getSelectedRow();
-//        if (selectRow >= 0) {
-//            String _mssv = (String) jTableClassCourse.getValueAt(selectRow, 1);
-//            if (this.type == 0) {
-//                int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-//                if (res == JOptionPane.YES_OPTION) {
-//                    boolean removeStatus = removeStudent(_mssv);
-//                    if (removeStatus) {
-//                        JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
-//                        initLayout(this.columnNamesStudent);
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Xóa không thành công ", "Error", JOptionPane.ERROR_MESSAGE);
-//                    }
-//                }
-//            } else {
+        int selectRow = jTableClassCourse.getSelectedRow();
+        if (selectRow >= 0) {
+            String _mssv = (String) jTableClassCourse.getValueAt(selectRow, 1);
+            if (this.type == 0) {
+                int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (res == JOptionPane.YES_OPTION) {
+                    ClassRoomCourse crc = new ClassRoomCourse(className, idCourse, _mssv);
+                    boolean removeStatus = ClassRoomCourseDAO.deleteStudentOutCourse(crc);
+                    if (removeStatus) {
+                        JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
+                        initLayout(this.columnNamesStudent);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Xóa không thành công ", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
 //                if (this.uScoreStudent == null) {
 //                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
 //                    this.uScoreStudent.setVisible(true);
@@ -354,10 +359,10 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 //                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
 //                    this.uScoreStudent.setVisible(true);
 //                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
-//        }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jbtRemoveUpdateActionPerformed
 
     private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
@@ -377,50 +382,26 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         initLayout(this.columnNamesTableScore);
     }//GEN-LAST:event_jbtReloadActionPerformed
 
-//    private boolean removeStudent(String _mssv) {
-//        boolean result = false;
-//        ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
-//        ArrayList<Student> listStudent = new ArrayList<Student>();
-//        listStudent = classRoomCourse.getListStudent();
-//
-//        int _index = -1;
-//        for (Student student : listStudent) {
-//            if (student.checkMSSV(_mssv)) {
-//                result = true;
-//                _index = listStudent.indexOf(student);
-//            }
-//        }
-//
-//        if (result) {
-//            listStudent.remove(_index);
-//            classRoomCourse.setListStudent(listStudent);
-//            school.setClassRoomCourse(this.className, this.idCourse, classRoomCourse);
-//        }
-//
-//        return result;
-//    }
-
     private void initLayout(String[] _columnName) {
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(_columnName);
         jTableClassCourse.setModel(tableModel);
-        ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
         int stt = 1;
 
         if (this.type == 0) {
-            ArrayList<Student> listStudent = classRoomCourse.getListStudent();
+            List<Student> listStudent = ClassRoomCourseDAO.getListStudent(className, idCourse);
             if (listStudent.size() > 0) {
-                for (Student student : listStudent) {
+                for (Student sd : listStudent) {
                     String[] rows = new String[5];
                     rows[0] = String.valueOf(stt);
-                    rows[1] = student.getMSSV();
-                    rows[2] = student.getName();
-                    if (student.getSex() == 0) {
+                    rows[1] = sd.getMaStudent();
+                    rows[2] = sd.getNameStudent();
+                    if (sd.getSex() == 0) {
                         rows[3] = "Nam";
                     } else {
                         rows[3] = "Nữ";
                     }
-                    rows[3] = student.getCMND();
+                    rows[3] = sd.getCmnd();
 
                     tableModel.addRow(rows);
                     stt++;
@@ -430,30 +411,30 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         }
 
-        if (this.type == 1) {
-            ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
-            if (listTableScore.size() > 0) {
-                for (TableScore ts : listTableScore) {
-                    String[] rows = new String[8];
-                    rows[0] = String.valueOf(stt);
-                    rows[1] = ts.getSd().getMSSV();
-                    rows[2] = ts.getSd().getName();
-                    rows[3] = String.valueOf(ts.getScoreMiddleTest());
-                    rows[4] = String.valueOf(ts.getScoreFinalTest());
-                    rows[5] = String.valueOf(ts.getScoreDifferent());
-                    rows[6] = String.valueOf(ts.getFinalScore());
-                    rows[7] = ts.getResult();
-
-                    tableModel.addRow(rows);
-                    stt++;
-                }
-                jTableClassCourse.setModel(tableModel);
-                jtfTotalFail.setText(String.valueOf(classRoomCourse.getTotalFail()));
-                jtfPercentFail.setText(String.valueOf(classRoomCourse.getPercentFail()));
-                jtfTotalPass.setText(String.valueOf(classRoomCourse.getTotalPass()));
-                jtfPercentPass.setText(String.valueOf(classRoomCourse.getPercentPass()));
-            }
-        }
+//        if (this.type == 1) {
+//            ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
+//            if (listTableScore.size() > 0) {
+//                for (TableScore ts : listTableScore) {
+//                    String[] rows = new String[8];
+//                    rows[0] = String.valueOf(stt);
+//                    rows[1] = ts.getSd().getMSSV();
+//                    rows[2] = ts.getSd().getName();
+//                    rows[3] = String.valueOf(ts.getScoreMiddleTest());
+//                    rows[4] = String.valueOf(ts.getScoreFinalTest());
+//                    rows[5] = String.valueOf(ts.getScoreDifferent());
+//                    rows[6] = String.valueOf(ts.getFinalScore());
+//                    rows[7] = ts.getResult();
+//
+//                    tableModel.addRow(rows);
+//                    stt++;
+//                }
+//                jTableClassCourse.setModel(tableModel);
+//                jtfTotalFail.setText(String.valueOf(classRoomCourse.getTotalFail()));
+//                jtfPercentFail.setText(String.valueOf(classRoomCourse.getPercentFail()));
+//                jtfTotalPass.setText(String.valueOf(classRoomCourse.getTotalPass()));
+//                jtfPercentPass.setText(String.valueOf(classRoomCourse.getPercentPass()));
+//            }
+//        }
     }
 
     private void operateFile(String title, int type) {

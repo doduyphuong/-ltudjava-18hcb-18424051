@@ -6,16 +6,21 @@
 package quanlisinhvien_hibernate;
 
 import dao.CalenderCourseDAO;
+import dao.ClassRoomCourseDAO;
 import dao.ClassRoomDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojos.CalenderCourse;
+import pojos.ClassRoom;
+import pojos.ClassRoomCourse;
+import pojos.Student;
 
 /**
  *
@@ -184,13 +189,13 @@ public class manageCalenderCourse extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtBackActionPerformed
 
     private void jbtnViewClassCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewClassCourseActionPerformed
-//        String idCourse = String.valueOf(jcbClassCourse.getItemAt(jcbClassCourse.getSelectedIndex()));
-//        if (!idCourse.equals("null")) {
-//            manageClassRoomCourse mClassRoomCourse = new manageClassRoomCourse(this, this.className, idCourse);
-//            mClassRoomCourse.setVisible(true);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Chưa có danh sách lịch học.", "Warning", JOptionPane.WARNING_MESSAGE);
-//        }
+        String idCourse = String.valueOf(jcbClassCourse.getItemAt(jcbClassCourse.getSelectedIndex()));
+        if (!idCourse.equals("null")) {
+            manageClassRoomCourse mClassRoomCourse = new manageClassRoomCourse(this, this.className, idCourse);
+            mClassRoomCourse.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa có danh sách lịch học.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jbtnViewClassCourseActionPerformed
 
     private void operateFile(String title, int type) {
@@ -234,8 +239,18 @@ public class manageCalenderCourse extends javax.swing.JFrame {
 
                 CalenderCourse calenderCourse = new CalenderCourse(_cCourse[0], _cCourse[1], maClass, _cCourse[2], hocKy, namHoc);
 
-                CalenderCourseDAO.createCalenderCourse(calenderCourse);
-
+                boolean checkCreacte = CalenderCourseDAO.createCalenderCourse(calenderCourse);
+                
+                // Thêm danh sách sv của lớp vào bảng ClassRoomCourse
+                if(checkCreacte) {
+                    CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(maClass, _cCourse[0]);
+                    ClassRoom cr = ClassRoomDAO.getClassRoom(maClass);
+                    Set<Student> listStudent = cr.getListStudent();
+                    for(Student sd : listStudent) {
+                        ClassRoomCourse _crc = new ClassRoomCourse(maClass, cCourse.getId().toString(), sd.getMaStudent());
+                        ClassRoomCourseDAO.addStudentInCourse(_crc);
+                    }
+                }
             }
             br.close();
 
