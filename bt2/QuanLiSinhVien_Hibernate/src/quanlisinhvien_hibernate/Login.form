@@ -100,8 +100,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfUsername">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="giaovu"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jtfPasswd">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="giaovu"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbtLogin">
       <Properties>

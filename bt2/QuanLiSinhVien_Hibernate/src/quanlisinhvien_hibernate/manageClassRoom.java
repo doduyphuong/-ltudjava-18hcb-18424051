@@ -103,17 +103,21 @@ public class manageClassRoom extends javax.swing.JFrame {
         try {
             try (FileReader fr = new FileReader(file)) {
                 BufferedReader br = new BufferedReader(fr);
-                String line;
+                String line = "";
                 // Lấy tên lớp
                 line = br.readLine();
                 String[] _className = line.split(",");
-                ClassRoom cr = ClassRoomDAO.getClassRoom(String.valueOf(_className[0]));
+//                System.out.println(_className[0]);
+                // Bug lỗi định mệnh fix lại.
+                String maLop = _className[0].replaceAll("﻿", "");
+//                System.out.println(maLop);
+                ClassRoom cr = ClassRoomDAO.getClassRoom(maLop);
 //                ClassRoom cr = ClassRoomDAO.getClassRoom("17HCB");
                 if(cr == null) {
                     cr.setMaClass(_className[0]);
                     ClassRoomDAO.createClassRoom(cr);
                 }
-                
+                line = br.readLine();
                 // Lấy thông tin Student
                 while ((line = br.readLine()) != null) {
                     String[] inforStudent = line.split(",");
@@ -130,6 +134,7 @@ public class manageClassRoom extends javax.swing.JFrame {
                     student.setSex(sex);
                     StudentDAO.createStudent(student);
                 }
+                br.close();
             }
             initLayout();
         } catch (Exception e) {
@@ -325,12 +330,12 @@ public class manageClassRoom extends javax.swing.JFrame {
 
     private void jbtViewClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewClassActionPerformed
         String nameClass = String.valueOf(jcbClassRoom.getItemAt(jcbClassRoom.getSelectedIndex()));
-//        if (!nameClass.equals("null")) {
-//            manageStudent mStudent = new manageStudent(nameClass, this);
-//            mStudent.setVisible(true);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Chưa có danh sách lớp học.", "Warning", JOptionPane.WARNING_MESSAGE);
-//        }
+        if (!nameClass.equals("null")) {
+            manageStudent mStudent = new manageStudent(nameClass, this);
+            mStudent.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa có danh sách lớp học.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_jbtViewClassActionPerformed
 

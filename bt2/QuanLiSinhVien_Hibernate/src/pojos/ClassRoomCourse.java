@@ -1,5 +1,9 @@
 package pojos;
-// Generated Aug 7, 2019 9:45:00 AM by Hibernate Tools 4.3.1
+// Generated Aug 12, 2019 10:15:22 AM by Hibernate Tools 4.3.1
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 
 
@@ -8,12 +12,12 @@ package pojos;
  */
 public class ClassRoomCourse  implements java.io.Serializable {
 
-
-     private Integer id;
-     private String maClass;
-     private String maCourse;
-     private String maStudent;
-
+    private Integer id;
+    private String maClass;
+    private String maCourse;
+    private String maStudent;
+    private Set<Student> listStudent = new HashSet<Student>(0);
+    
     public ClassRoomCourse() {
     }
 
@@ -52,9 +56,15 @@ public class ClassRoomCourse  implements java.io.Serializable {
         this.maStudent = maStudent;
     }
 
+    public Set<Student> getListStudent() {
+        return listStudent;
+    }
 
-
-
+    public void setListStudent(Set<Student> listStudent) {
+        this.listStudent = listStudent;
+    }
+    
+    
 }
 
 

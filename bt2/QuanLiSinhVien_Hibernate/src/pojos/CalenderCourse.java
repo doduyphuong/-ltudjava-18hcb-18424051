@@ -1,5 +1,5 @@
 package pojos;
-// Generated Aug 7, 2019 9:45:00 AM by Hibernate Tools 4.3.1
+// Generated Aug 12, 2019 10:15:22 AM by Hibernate Tools 4.3.1
 
 
 
@@ -11,16 +11,29 @@ public class CalenderCourse  implements java.io.Serializable {
 
      private Integer id;
      private String maCourse;
+     private String nameCourse;
      private String maClass;
      private String location;
+     private String hocKy;
+     private String namHoc;
 
     public CalenderCourse() {
     }
 
-    public CalenderCourse(String maCourse, String maClass, String location) {
+	
+    public CalenderCourse(String maCourse, String nameCourse, String maClass, String location) {
+        this.maCourse = maCourse;
+        this.nameCourse = nameCourse;
+        this.maClass = maClass;
+        this.location = location;
+    }
+    public CalenderCourse(String maCourse, String nameCourse, String maClass, String location, String hocKy, String namHoc) {
        this.maCourse = maCourse;
+       this.nameCourse = nameCourse;
        this.maClass = maClass;
        this.location = location;
+       this.hocKy = hocKy;
+       this.namHoc = namHoc;
     }
    
     public Integer getId() {
@@ -37,6 +50,13 @@ public class CalenderCourse  implements java.io.Serializable {
     public void setMaCourse(String maCourse) {
         this.maCourse = maCourse;
     }
+    public String getNameCourse() {
+        return this.nameCourse;
+    }
+    
+    public void setNameCourse(String nameCourse) {
+        this.nameCourse = nameCourse;
+    }
     public String getMaClass() {
         return this.maClass;
     }
@@ -50,6 +70,20 @@ public class CalenderCourse  implements java.io.Serializable {
     
     public void setLocation(String location) {
         this.location = location;
+    }
+    public String getHocKy() {
+        return this.hocKy;
+    }
+    
+    public void setHocKy(String hocKy) {
+        this.hocKy = hocKy;
+    }
+    public String getNamHoc() {
+        return this.namHoc;
+    }
+    
+    public void setNamHoc(String namHoc) {
+        this.namHoc = namHoc;
     }
 
 
