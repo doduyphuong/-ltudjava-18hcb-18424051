@@ -5,15 +5,17 @@
  */
 package quanlisinhvien_hibernate;
 
+import dao.CalenderCourseDAO;
 import dao.ClassRoomCourseDAO;
+import dao.StudentDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pojos.CalenderCourse;
 import pojos.ClassRoomCourse;
 import pojos.Student;
 
@@ -23,10 +25,9 @@ import pojos.Student;
  */
 public class manageClassRoomCourse extends javax.swing.JFrame {
 
-    private String className = "", idCourse = "";
+    private String className = "17HCB", idCourse = "CTT011";
     manageCalenderCourse mcc;
     private final int FILE_OPEN = 1;
-    addStudent a;
 //    updateScoreStudent uScoreStudent;
     private int type = 0;
 
@@ -92,9 +93,12 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jtfPercentFail = new javax.swing.JTextField();
         jtfPercentPass = new javax.swing.JTextField();
         jbtRemoveUpdate = new javax.swing.JButton();
-        jbtAddStudent = new javax.swing.JButton();
         jbtUpdate = new javax.swing.JButton();
         jbtReload = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jbtAddStudent = new javax.swing.JButton();
+        jtxtMSSV = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,20 +173,20 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStatisticLayout.createSequentialGroup()
                 .addGroup(jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelStatisticLayout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel2)
-                        .addGap(122, 122, 122))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStatisticLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfTotalFail, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(jtfTotalPass))
-                        .addGap(18, 18, 18)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanelStatisticLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel2)
+                        .addGap(59, 59, 59)))
+                .addGroup(jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtfTotalFail, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(jtfTotalPass))
+                .addGap(32, 32, 32)
                 .addGroup(jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelStatisticLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -192,7 +196,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jtfPercentPass)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelStatisticLayout.setVerticalGroup(
             jPanelStatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,13 +225,6 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         });
 
-        jbtAddStudent.setText("Thêm SV");
-        jbtAddStudent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddStudentActionPerformed(evt);
-            }
-        });
-
         jbtUpdate.setText("Cập nhật DS");
         jbtUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,6 +239,46 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 32767));
+
+        jbtAddStudent.setText("Thêm SV");
+        jbtAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddStudentActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("MSSV:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 121, Short.MAX_VALUE)
+                        .addComponent(jbtAddStudent))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtMSSV)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jtxtMSSV, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtAddStudent)
+                .addGap(24, 24, 24))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,24 +292,20 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                         .addComponent(jbtUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtReload)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                        .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtAddStudent)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtRemoveUpdate))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addComponent(jbtnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbtViewListStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbtViewTableScore))))
                 .addContainerGap())
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbtViewListStudent, jbtViewTableScore});
@@ -282,22 +315,24 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtViewListStudent)
-                            .addComponent(jbtnBack))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtViewTableScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jbtViewListStudent)
+                                .addComponent(jbtnBack))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jbtViewTableScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(41, 41, 41))
+                        .addComponent(jPanelStatistic, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnImportTableScore)
                     .addComponent(jbtRemoveUpdate)
-                    .addComponent(jbtAddStudent)
                     .addComponent(jbtUpdate)
                     .addComponent(jbtReload))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
         );
 
         pack();
@@ -342,7 +377,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             if (this.type == 0) {
                 int res = JOptionPane.showConfirmDialog(this, "Có muốn xóa sinh viên khỏi khóa học không?", "Remove", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (res == JOptionPane.YES_OPTION) {
-                    ClassRoomCourse crc = new ClassRoomCourse(className, idCourse, _mssv);
+                    CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(className, idCourse);
+                    ClassRoomCourse crc = new ClassRoomCourse(cCourse.getId(), _mssv);
                     boolean removeStatus = ClassRoomCourseDAO.deleteStudentOutCourse(crc);
                     if (removeStatus) {
                         JOptionPane.showMessageDialog(null, "Xóa thành công", "Status", JOptionPane.INFORMATION_MESSAGE);
@@ -366,11 +402,24 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtRemoveUpdateActionPerformed
 
     private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
-        if (this.a == null) {
-            this.a = new addStudent(this.className, this.idCourse);
-            this.a.setVisible(true);
+        String mssv = this.jtxtMSSV.getText();
+        if(mssv.equals("")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            this.a.setVisible(true);
+            Student sd = StudentDAO.getStudent(mssv);
+            if(sd == null) {
+                JOptionPane.showMessageDialog(null, "Sinh viên không có trong danh sách của trường.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(className, idCourse);
+                ClassRoomCourse crc = new ClassRoomCourse(cCourse.getId(), sd.getMaStudent());
+                boolean checkCreate = ClassRoomCourseDAO.addStudentInCourse(crc);
+                if(checkCreate) {
+                    JOptionPane.showMessageDialog(null, "Thêm sinh viên thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    initLayout(this.columnNamesStudent);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Thêm sinh viên không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }//GEN-LAST:event_jbtAddStudentActionPerformed
 
@@ -389,26 +438,30 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         int stt = 1;
 
         if (this.type == 0) {
-            List<Student> listStudent = ClassRoomCourseDAO.getListStudent(className, idCourse);
-            if (listStudent.size() > 0) {
-                for (Student sd : listStudent) {
-                    String[] rows = new String[5];
-                    rows[0] = String.valueOf(stt);
-                    rows[1] = sd.getMaStudent();
-                    rows[2] = sd.getNameStudent();
-                    if (sd.getSex() == 0) {
-                        rows[3] = "Nam";
-                    } else {
-                        rows[3] = "Nữ";
+            CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(className, idCourse);
+            if (cCourse != null) {
+                List<Student> listStudent = ClassRoomCourseDAO.getListStudent(cCourse.getId());
+                if (listStudent.size() > 0) {
+                    for (Student sd : listStudent) {
+                        String[] rows = new String[5];
+                        rows[0] = String.valueOf(stt);
+                        rows[1] = sd.getMaStudent();
+                        rows[2] = sd.getNameStudent();
+                        if (sd.getSex() == 0) {
+                            rows[3] = "Nam";
+                        } else {
+                            rows[3] = "Nữ";
+                        }
+                        rows[3] = sd.getCmnd();
+
+                        tableModel.addRow(rows);
+                        stt++;
                     }
-                    rows[3] = sd.getCmnd();
 
-                    tableModel.addRow(rows);
-                    stt++;
+                    jTableClassCourse.setModel(tableModel);
                 }
-
-                jTableClassCourse.setModel(tableModel);
             }
+
         }
 
 //        if (this.type == 1) {
@@ -493,7 +546,6 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
     /**
      * @param args the command line arguments
      */
@@ -536,6 +588,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelStatistic;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassCourse;
@@ -551,5 +605,6 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private javax.swing.JTextField jtfPercentPass;
     private javax.swing.JTextField jtfTotalFail;
     private javax.swing.JTextField jtfTotalPass;
+    private javax.swing.JTextField jtxtMSSV;
     // End of variables declaration//GEN-END:variables
 }

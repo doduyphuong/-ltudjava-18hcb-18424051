@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -37,7 +38,7 @@ public class CalenderCourseDAO {
 
     public static CalenderCourse getCalenderCourse(String maClass, String maCourse) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        CalenderCourse cCourse = null;
+        List<CalenderCourse> listCourse = null;
         
         try {
             String hql = "select cc";
@@ -46,7 +47,7 @@ public class CalenderCourseDAO {
             Query query = session.createQuery(hql);
             query.setParameter("maClass", maClass);
             query.setParameter("maCourse", maCourse);
-            cCourse =  (CalenderCourse) query.list();
+            listCourse = query.list();
         } catch(HibernateException ex) {
             System.err.println(ex);
         } finally {
@@ -54,6 +55,6 @@ public class CalenderCourseDAO {
         }
         
         
-        return cCourse;
+        return listCourse.get(0);
     }
 }

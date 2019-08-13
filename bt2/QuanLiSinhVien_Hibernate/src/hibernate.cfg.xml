@@ -6,14 +6,10 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/quanlysinhvien?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <mapping resource="pojos/Course.hbm.xml"/>
-    <mapping resource="pojos/ClassRoom.hbm.xml"/>
-    <mapping resource="pojos/Reexamine.hbm.xml"/>
-    <mapping resource="pojos/Student.hbm.xml"/>
-    <mapping resource="pojos/TableScore.hbm.xml"/>
-    <mapping resource="pojos/ClassRoomCourse.hbm.xml"/>
-    <mapping resource="pojos/CalenderCourse.hbm.xml"/>
-    <mapping resource="pojos/TableReexamine.hbm.xml"/>
-    <mapping resource="pojos/Account.hbm.xml"/>
+    <mapping class="pojos.Account" package="pojos" resource="pojos/Account.hbm.xml"/>
+    <mapping class="pojos.ClassRoom" package="pojos" resource="pojos/ClassRoom.hbm.xml"/>
+    <mapping class="pojos.Student" package="pojos" resource="pojos/Student.hbm.xml"/>
+    <mapping class="pojos.CalenderCourse" package="pojos" resource="pojos/CalenderCourse.hbm.xml"/>
+    <mapping class="pojos.ClassRoomCourse" package="pojos" resource="pojos/ClassRoomCourse.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

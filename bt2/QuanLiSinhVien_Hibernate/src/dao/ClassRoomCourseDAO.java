@@ -19,17 +19,16 @@ import util.HibernateUtil;
  * @author DoDuyPhuong
  */
 public class ClassRoomCourseDAO {
-    public static List<Student> getListStudent(String maClass, String maCourse) {
+    public static List<Student> getListStudent(Integer idCalenderCourse) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Student> listStudent = null;
         
         try {
             String hql = "select sd";
             hql += " from ClassRoomCourse crc, Student sd";
-            hql += " where crc.maClass=:maClass and crc.maCourse=:maCourse and crc.maStudent=sd.maStudent";
+            hql += " where crc.idCalenderCourse=:idCalenderCourse and crc.maStudent=sd.maStudent";
             Query query = session.createQuery(hql);
-            query.setParameter("maClass", maClass);
-            query.setParameter("maCourse", maCourse);
+            query.setParameter("idCalenderCourse", idCalenderCourse);
             listStudent =  query.list();
         } catch(HibernateException ex) {
             System.err.println(ex);

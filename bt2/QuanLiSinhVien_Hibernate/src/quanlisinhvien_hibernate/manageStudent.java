@@ -216,8 +216,8 @@ public class manageStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtUpdateActionPerformed
 
     private void jbtViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewCourseActionPerformed
-//        manageCalenderCourse calenderCourse = new manageCalenderCourse(this.className, this);
-//        calenderCourse.setVisible(true);
+        manageCalenderCourse calenderCourse = new manageCalenderCourse(this.className, this);
+        calenderCourse.setVisible(true);
     }//GEN-LAST:event_jbtViewCourseActionPerformed
 
     private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed

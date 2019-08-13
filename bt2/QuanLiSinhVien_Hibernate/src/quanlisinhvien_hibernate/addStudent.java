@@ -5,11 +5,13 @@
  */
 package quanlisinhvien_hibernate;
 
+import dao.CalenderCourseDAO;
 import dao.ClassRoomCourseDAO;
 import dao.ClassRoomDAO;
 import dao.StudentDAO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import pojos.CalenderCourse;
 import pojos.ClassRoom;
 import pojos.ClassRoomCourse;
 import pojos.Student;
@@ -230,7 +232,8 @@ public class addStudent extends javax.swing.JDialog {
                 checkCreate = StudentDAO.createStudent(sd);
 
             } else {
-                ClassRoomCourse crc = new ClassRoomCourse(className, idCourse, mssv);
+                CalenderCourse CCourse = CalenderCourseDAO.getCalenderCourse(className, idCourse);
+                ClassRoomCourse crc = new ClassRoomCourse(CCourse.getId(), mssv);
                 checkCreate = ClassRoomCourseDAO.addStudentInCourse(crc);
             }
 
@@ -239,9 +242,9 @@ public class addStudent extends javax.swing.JDialog {
                 jtfMSSV.setText("");
                 jtfName.setText("");
                 jtfCMND.setText("");
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Thêm học sinh không thành công.");
-            } 
+            }
 
         }
     }//GEN-LAST:event_jbtAddStudentActionPerformed

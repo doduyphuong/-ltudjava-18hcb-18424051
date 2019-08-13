@@ -229,7 +229,7 @@ public class manageCalenderCourse extends javax.swing.JFrame {
             String maClass = _className[0].replaceAll("﻿", "");
             String hocKy = _className[1];
             String namHoc = _className[2];
-            
+
             System.out.println(_className[0]);
             System.out.println(_className[1]);
             System.out.println(_className[2]);
@@ -240,14 +240,14 @@ public class manageCalenderCourse extends javax.swing.JFrame {
                 CalenderCourse calenderCourse = new CalenderCourse(_cCourse[0], _cCourse[1], maClass, _cCourse[2], hocKy, namHoc);
 
                 boolean checkCreacte = CalenderCourseDAO.createCalenderCourse(calenderCourse);
-                
+
                 // Thêm danh sách sv của lớp vào bảng ClassRoomCourse
-                if(checkCreacte) {
+                if (checkCreacte) {
                     CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(maClass, _cCourse[0]);
                     ClassRoom cr = ClassRoomDAO.getClassRoom(maClass);
                     Set<Student> listStudent = cr.getListStudent();
-                    for(Student sd : listStudent) {
-                        ClassRoomCourse _crc = new ClassRoomCourse(maClass, cCourse.getId().toString(), sd.getMaStudent());
+                    for (Student sd : listStudent) {
+                        ClassRoomCourse _crc = new ClassRoomCourse(cCourse.getId(), sd.getMaStudent());
                         ClassRoomCourseDAO.addStudentInCourse(_crc);
                     }
                 }
