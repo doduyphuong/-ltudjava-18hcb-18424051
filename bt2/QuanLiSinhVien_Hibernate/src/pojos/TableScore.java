@@ -10,8 +10,7 @@ public class TableScore  implements java.io.Serializable {
 
 
      private Integer id;
-     private String maClass;
-     private String maCourse;
+     private Integer idCalenderCourse;
      private String maStudent;
      private Double scoreMiddleTest;
      private Double scoreFinalTest;
@@ -22,14 +21,12 @@ public class TableScore  implements java.io.Serializable {
     }
 
 	
-    public TableScore(String maClass, String maCourse, String maStudent) {
-        this.maClass = maClass;
-        this.maCourse = maCourse;
+    public TableScore(Integer idCalenderCourse, String maStudent) {
+        this.idCalenderCourse = idCalenderCourse;
         this.maStudent = maStudent;
     }
-    public TableScore(String maClass, String maCourse, String maStudent, Double scoreMiddleTest, Double scoreFinalTest, Double scoreDifferent, Double finalScore) {
-       this.maClass = maClass;
-       this.maCourse = maCourse;
+    public TableScore(Integer idCalenderCourse, String maStudent, Double scoreMiddleTest, Double scoreFinalTest, Double scoreDifferent, Double finalScore) {
+       this.idCalenderCourse = idCalenderCourse;
        this.maStudent = maStudent;
        this.scoreMiddleTest = scoreMiddleTest;
        this.scoreFinalTest = scoreFinalTest;
@@ -44,20 +41,15 @@ public class TableScore  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getMaClass() {
-        return this.maClass;
+
+    public Integer getIdCalenderCourse() {
+        return idCalenderCourse;
+    }
+
+    public void setIdCalenderCourse(Integer idCalenderCourse) {
+        this.idCalenderCourse = idCalenderCourse;
     }
     
-    public void setMaClass(String maClass) {
-        this.maClass = maClass;
-    }
-    public String getMaCourse() {
-        return this.maCourse;
-    }
-    
-    public void setMaCourse(String maCourse) {
-        this.maCourse = maCourse;
-    }
     public String getMaStudent() {
         return this.maStudent;
     }

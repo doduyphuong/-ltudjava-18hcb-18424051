@@ -8,11 +8,8 @@
             <column name="ID" />
             <generator class="identity" />
         </id>
-        <property name="maClass" type="string">
-            <column name="MaClass" length="10" not-null="true" />
-        </property>
-        <property name="maCourse" type="string">
-            <column name="MaCourse" length="10" not-null="true" />
+        <property name="idCalenderCourse" type="java.lang.Integer">
+            <column name="IDCalenderCourse" length="10" not-null="true" />
         </property>
         <property name="maStudent" type="string">
             <column name="MaStudent" length="10" not-null="true" />
