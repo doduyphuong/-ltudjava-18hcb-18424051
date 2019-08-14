@@ -122,6 +122,9 @@ public class manageClassRoom extends javax.swing.JFrame {
                 while ((line = br.readLine()) != null) {
                     String[] inforStudent = line.split(",");
                     Student student = new Student(inforStudent[0], inforStudent[1], inforStudent[3], cr);
+                    Account a = new Account(inforStudent[0], inforStudent[0], cr.getMaClass(),0);
+                    AccountDAO.createAccount(a);
+                    
                     int sex = -1;
                     if (inforStudent[2].equalsIgnoreCase("Nam")) {
                         sex = 0;

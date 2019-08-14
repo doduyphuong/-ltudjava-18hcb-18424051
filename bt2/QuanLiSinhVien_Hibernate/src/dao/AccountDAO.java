@@ -50,4 +50,24 @@ public class AccountDAO {
         
         return true;
     }
+
+    public static boolean createAccount(Account a) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if(AccountDAO.getAccount(a.getUserName()) != null) {
+            return false;
+        }
+        
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(a);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return true;
+    }
 }
