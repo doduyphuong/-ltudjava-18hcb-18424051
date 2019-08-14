@@ -11,5 +11,6 @@
     <mapping class="pojos.Student" package="pojos" resource="pojos/Student.hbm.xml"/>
     <mapping class="pojos.CalenderCourse" package="pojos" resource="pojos/CalenderCourse.hbm.xml"/>
     <mapping class="pojos.ClassRoomCourse" package="pojos" resource="pojos/ClassRoomCourse.hbm.xml"/>
+    <mapping class="pojos.TableScore" package="pojos" resource="pojos/TableScore.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

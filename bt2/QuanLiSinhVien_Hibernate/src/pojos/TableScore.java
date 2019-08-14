@@ -11,7 +11,7 @@ public class TableScore  implements java.io.Serializable {
 
      private Integer id;
      private Integer idCalenderCourse;
-     private String maStudent;
+     private Student student;
      private Double scoreMiddleTest;
      private Double scoreFinalTest;
      private Double scoreDifferent;
@@ -21,13 +21,14 @@ public class TableScore  implements java.io.Serializable {
     }
 
 	
-    public TableScore(Integer idCalenderCourse, String maStudent) {
+    public TableScore(Integer idCalenderCourse, Student student) {
         this.idCalenderCourse = idCalenderCourse;
-        this.maStudent = maStudent;
+        this.student = student;
     }
-    public TableScore(Integer idCalenderCourse, String maStudent, Double scoreMiddleTest, Double scoreFinalTest, Double scoreDifferent, Double finalScore) {
+    
+    public TableScore(Integer idCalenderCourse, Student student, Double scoreMiddleTest, Double scoreFinalTest, Double scoreDifferent, Double finalScore) {
        this.idCalenderCourse = idCalenderCourse;
-       this.maStudent = maStudent;
+       this.student = student;
        this.scoreMiddleTest = scoreMiddleTest;
        this.scoreFinalTest = scoreFinalTest;
        this.scoreDifferent = scoreDifferent;
@@ -37,7 +38,6 @@ public class TableScore  implements java.io.Serializable {
     public Integer getId() {
         return this.id;
     }
-    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -45,50 +45,52 @@ public class TableScore  implements java.io.Serializable {
     public Integer getIdCalenderCourse() {
         return idCalenderCourse;
     }
-
     public void setIdCalenderCourse(Integer idCalenderCourse) {
         this.idCalenderCourse = idCalenderCourse;
     }
-    
-    public String getMaStudent() {
-        return this.maStudent;
+
+    public Student getStudent() {
+        return student;
+    }
+    public void setStudent(Student student) {
+        this.student = student;
     }
     
-    public void setMaStudent(String maStudent) {
-        this.maStudent = maStudent;
-    }
     public Double getScoreMiddleTest() {
         return this.scoreMiddleTest;
     }
-    
     public void setScoreMiddleTest(Double scoreMiddleTest) {
         this.scoreMiddleTest = scoreMiddleTest;
     }
+    
     public Double getScoreFinalTest() {
         return this.scoreFinalTest;
     }
-    
     public void setScoreFinalTest(Double scoreFinalTest) {
         this.scoreFinalTest = scoreFinalTest;
     }
+    
     public Double getScoreDifferent() {
         return this.scoreDifferent;
     }
-    
     public void setScoreDifferent(Double scoreDifferent) {
         this.scoreDifferent = scoreDifferent;
     }
+    
     public Double getFinalScore() {
         return this.finalScore;
     }
-    
     public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
     }
 
-
-
-
+    public boolean checkPass() {
+        if(this.finalScore < 5) {
+            return false;
+        }
+        
+        return true;
+    }
 }
 
 

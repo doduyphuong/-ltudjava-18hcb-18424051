@@ -11,9 +11,7 @@
         <property name="idCalenderCourse" type="java.lang.Integer">
             <column name="IDCalenderCourse" length="10" not-null="true" />
         </property>
-        <property name="maStudent" type="string">
-            <column name="MaStudent" length="10" not-null="true" />
-        </property>
+        
         <property name="scoreMiddleTest" type="java.lang.Double">
             <column name="ScoreMiddleTest" precision="22" scale="0" />
         </property>
@@ -26,5 +24,8 @@
         <property name="finalScore" type="java.lang.Double">
             <column name="FinalScore" precision="22" scale="0" />
         </property>
+        <many-to-one class="pojos.Student" name="student" fetch="select" lazy="false">
+            <column length="10" name="MaStudent" not-null="true"></column>
+        </many-to-one>
     </class>
 </hibernate-mapping>

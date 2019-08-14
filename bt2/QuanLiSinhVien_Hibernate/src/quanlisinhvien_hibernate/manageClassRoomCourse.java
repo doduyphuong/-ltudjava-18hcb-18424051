@@ -8,9 +8,11 @@ package quanlisinhvien_hibernate;
 import dao.CalenderCourseDAO;
 import dao.ClassRoomCourseDAO;
 import dao.StudentDAO;
+import dao.TableScoreDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import pojos.CalenderCourse;
 import pojos.ClassRoomCourse;
 import pojos.Student;
+import pojos.TableScore;
 
 /**
  *
@@ -95,7 +98,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jbtRemoveUpdate = new javax.swing.JButton();
         jbtUpdate = new javax.swing.JButton();
         jbtReload = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelAddStudent = new javax.swing.JPanel();
         jbtAddStudent = new javax.swing.JButton();
         jtxtMSSV = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -239,8 +242,6 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 32767));
-
         jbtAddStudent.setText("Thêm SV");
         jbtAddStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,27 +252,27 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("MSSV:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelAddStudentLayout = new javax.swing.GroupLayout(jPanelAddStudent);
+        jPanelAddStudent.setLayout(jPanelAddStudentLayout);
+        jPanelAddStudentLayout.setHorizontalGroup(
+            jPanelAddStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelAddStudentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanelAddStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAddStudentLayout.createSequentialGroup()
                         .addGap(0, 121, Short.MAX_VALUE)
                         .addComponent(jbtAddStudent))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelAddStudentLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxtMSSV)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        jPanelAddStudentLayout.setVerticalGroup(
+            jPanelAddStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAddStudentLayout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(jPanelAddStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jtxtMSSV, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -298,9 +299,9 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                         .addComponent(jbtnBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanelAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbtViewListStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbtViewTableScore))))
@@ -315,16 +316,14 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jbtViewListStudent)
-                                .addComponent(jbtnBack))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jbtViewTableScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(41, 41, 41))
-                        .addComponent(jPanelStatistic, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtViewListStudent)
+                            .addComponent(jbtnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtViewTableScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnImportTableScore)
@@ -345,8 +344,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jbtnImportTableScore.setVisible(false);
         jPanelStatistic.setVisible(false);
         this.jbtReload.setVisible(false);
-        jbtAddStudent.setVisible(true);
         jbtUpdate.setVisible(true);
+        jPanelAddStudent.setVisible(true);
         jbtRemoveUpdate.setText("Xóa");
     }//GEN-LAST:event_jbtViewListStudentActionPerformed
 
@@ -357,8 +356,8 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
         jPanelStatistic.setVisible(true);
         this.jbtReload.setVisible(true);
         jbtRemoveUpdate.setText("Sửa");
-        jbtAddStudent.setVisible(false);
         jbtUpdate.setVisible(false);
+        jPanelAddStudent.setVisible(false);
     }//GEN-LAST:event_jbtViewTableScoreActionPerformed
 
     private void jbtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
@@ -403,17 +402,17 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 
     private void jbtAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStudentActionPerformed
         String mssv = this.jtxtMSSV.getText();
-        if(mssv.equals("")) {
+        if (mssv.equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             Student sd = StudentDAO.getStudent(mssv);
-            if(sd == null) {
+            if (sd == null) {
                 JOptionPane.showMessageDialog(null, "Sinh viên không có trong danh sách của trường.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(className, idCourse);
                 ClassRoomCourse crc = new ClassRoomCourse(cCourse.getId(), sd.getMaStudent());
                 boolean checkCreate = ClassRoomCourseDAO.addStudentInCourse(crc);
-                if(checkCreate) {
+                if (checkCreate) {
                     JOptionPane.showMessageDialog(null, "Thêm sinh viên thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     initLayout(this.columnNamesStudent);
                 } else {
@@ -464,30 +463,64 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
 
         }
 
-//        if (this.type == 1) {
-//            ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
-//            if (listTableScore.size() > 0) {
-//                for (TableScore ts : listTableScore) {
-//                    String[] rows = new String[8];
-//                    rows[0] = String.valueOf(stt);
-//                    rows[1] = ts.getSd().getMSSV();
-//                    rows[2] = ts.getSd().getName();
-//                    rows[3] = String.valueOf(ts.getScoreMiddleTest());
-//                    rows[4] = String.valueOf(ts.getScoreFinalTest());
-//                    rows[5] = String.valueOf(ts.getScoreDifferent());
-//                    rows[6] = String.valueOf(ts.getFinalScore());
-//                    rows[7] = ts.getResult();
-//
-//                    tableModel.addRow(rows);
-//                    stt++;
-//                }
-//                jTableClassCourse.setModel(tableModel);
-//                jtfTotalFail.setText(String.valueOf(classRoomCourse.getTotalFail()));
-//                jtfPercentFail.setText(String.valueOf(classRoomCourse.getPercentFail()));
-//                jtfTotalPass.setText(String.valueOf(classRoomCourse.getTotalPass()));
-//                jtfPercentPass.setText(String.valueOf(classRoomCourse.getPercentPass()));
-//            }
-//        }
+        if (this.type == 1) {
+            CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(this.className, this.idCourse);
+            List<TableScore> listTableScore = TableScoreDAO.getTableScoreByCourse(cCourse.getId());
+            if (listTableScore.size() > 0) {
+                for (TableScore ts : listTableScore) {
+                    String[] rows = new String[8];
+                    rows[0] = String.valueOf(stt);
+                    rows[1] = ts.getStudent().getMaStudent();
+                    rows[2] = ts.getStudent().getNameStudent();
+                    rows[3] = String.valueOf(ts.getScoreMiddleTest());
+                    rows[4] = String.valueOf(ts.getScoreFinalTest());
+                    rows[5] = String.valueOf(ts.getScoreDifferent());
+                    rows[6] = String.valueOf(ts.getFinalScore());
+
+                    if (ts.checkPass()) {
+                        rows[7] = "Đậu";
+                    } else {
+                        rows[7] = "Rớt";
+                    }
+
+                    tableModel.addRow(rows);
+                    stt++;
+                }
+                jTableClassCourse.setModel(tableModel);
+                List statistical = this.getStatistical(listTableScore);
+
+                jtfTotalPass.setText(String.valueOf(statistical.get(0)));
+                jtfPercentPass.setText(String.valueOf(statistical.get(1)));
+                jtfTotalFail.setText(String.valueOf(statistical.get(2)));
+                jtfPercentFail.setText(String.valueOf(statistical.get(3)));
+            }
+        }
+    }
+
+    private ArrayList<Double> getStatistical(List<TableScore> listTableScore) {
+        ArrayList<Double> listStatistical = new ArrayList<Double>();
+        double pass = 0;
+        double fail = 0;
+        double percentPass = 0;
+        double percentFail = 0;
+        if (listTableScore.size() > 0) {
+            for (TableScore tbScore : listTableScore) {
+                if (tbScore.checkPass()) {
+                    pass += 1;
+                } else {
+                    fail += 1;
+                }
+            }
+        }
+        percentPass = (pass * 100) / listTableScore.size();
+        percentFail = (fail * 100) / listTableScore.size();
+
+        listStatistical.add(pass);
+        listStatistical.add(percentPass);
+        listStatistical.add(fail);
+        listStatistical.add(percentFail);
+
+        return listStatistical;
     }
 
     private void operateFile(String title, int type) {
@@ -504,48 +537,53 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
             File file = chooser.getSelectedFile();
             switch (type) {
                 case FILE_OPEN:
-//                    readFile(file);
+                    readFile(file);
                     break;
             }
         }
     }
 
-//    private void readFile(File file) {
-//        try {
-//            FileReader fr = new FileReader(file);
-//            BufferedReader br = new BufferedReader(fr);
-//            String line;
-//            // Lấy tên lớp
-//            line = br.readLine();
-////            String[] _className = line.split(",");
-//
-//            ClassRoomCourse classRoomCourse = school.getClassRoomCourse(this.className, this.idCourse);
-//            ArrayList<TableScore> listTableScore = classRoomCourse.getListTableScore();
-//            listTableScore.clear();
-//            while ((line = br.readLine()) != null) {
-//                String[] _tableScore = line.split(",");
-//
-//                // Tạo một thời khóa biểu cho môn học
-//                TableScore tbScore = new TableScore();
-//                Student sd = new Student(_tableScore[0], _tableScore[1]);
-//                tbScore.setSd(sd);
-//                tbScore.setScoreMiddleTest(Double.parseDouble(_tableScore[2]));
-//                tbScore.setScoreFinalTest(Double.parseDouble(_tableScore[3]));
-//                tbScore.setScoreDifferent(Double.parseDouble(_tableScore[4]));
-//                tbScore.setFinalSrore(Double.parseDouble(_tableScore[5]));
-//
-//                listTableScore.add(tbScore);
-//            }
-//
-//            classRoomCourse.setListTableScore(listTableScore);
-//            school.setClassRoomCourse(this.className, this.idCourse, classRoomCourse);
-//            br.close();
-//
-//            initLayout(this.columnNamesTableScore);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
+    private void readFile(File file) {
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            // Lấy tên lớp
+            line = br.readLine();
+            String[] _className = line.split(",");
+
+            String maLop = _className[0].replaceAll("﻿", "");
+            System.out.print(_className[1]);
+            if (maLop.equals(this.className) && _className[1].equals(this.idCourse)) {
+                System.out.print("true");
+            }
+
+            CalenderCourse cCourse = CalenderCourseDAO.getCalenderCourse(this.className, this.idCourse);
+            while ((line = br.readLine()) != null) {
+                String[] _tableScore = line.split(",");
+
+                // Tạo một thời khóa biểu cho môn học
+                Student sd = StudentDAO.getStudent(_tableScore[0]);
+                if (sd != null) {
+                    TableScore tbScore = new TableScore(cCourse.getId(), sd);
+                    tbScore.setScoreMiddleTest(Double.valueOf(_tableScore[2]));
+                    tbScore.setScoreFinalTest(Double.valueOf(_tableScore[3]));
+                    tbScore.setScoreDifferent(Double.valueOf(_tableScore[4]));
+                    tbScore.setFinalScore(Double.valueOf(_tableScore[5]));
+
+                    TableScoreDAO.createTableScore(tbScore);
+                }
+
+            }
+
+            br.close();
+
+            initLayout(this.columnNamesTableScore);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error to open file: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -589,7 +627,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelAddStudent;
     private javax.swing.JPanel jPanelStatistic;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClassCourse;
