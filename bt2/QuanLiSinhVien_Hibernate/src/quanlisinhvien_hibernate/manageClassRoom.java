@@ -114,7 +114,7 @@ public class manageClassRoom extends javax.swing.JFrame {
                 ClassRoom cr = ClassRoomDAO.getClassRoom(maLop);
 //                ClassRoom cr = ClassRoomDAO.getClassRoom("17HCB");
                 if(cr == null) {
-                    cr.setMaClass(_className[0]);
+                    cr = new ClassRoom(maLop);
                     ClassRoomDAO.createClassRoom(cr);
                 }
                 line = br.readLine();
