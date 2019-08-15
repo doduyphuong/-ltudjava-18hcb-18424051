@@ -54,7 +54,30 @@ public class CalenderCourseDAO {
             session.close();
         }
         
+        if(listCourse.size() > 0) {
+            return listCourse.get(0);
+        }
         
-        return listCourse.get(0);
+        return null;
     }
+    
+    public static List<CalenderCourse> getListCourseByClass(String maClass) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<CalenderCourse> result = null;
+        
+        try {
+            String hql = "select cCourse from CalenderCourse cCourse";
+            hql += " where cCourse.maClass=:maClass";
+            Query query = session.createQuery(hql);
+            query.setParameter("maClass", maClass);
+            result = query.list();
+        } catch(HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return result;
+    }
+    
 }

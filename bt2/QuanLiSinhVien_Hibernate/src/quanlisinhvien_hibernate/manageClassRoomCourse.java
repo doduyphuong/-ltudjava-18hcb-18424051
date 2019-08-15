@@ -31,7 +31,7 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
     private String className = "17HCB", idCourse = "CTT011";
     manageCalenderCourse mcc;
     private final int FILE_OPEN = 1;
-//    updateScoreStudent uScoreStudent;
+    updateScoreStudent uScoreStudent;
     private int type = 0;
 
     private final String[] columnNamesStudent = {
@@ -387,13 +387,13 @@ public class manageClassRoomCourse extends javax.swing.JFrame {
                     }
                 }
             } else {
-//                if (this.uScoreStudent == null) {
-//                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
-//                    this.uScoreStudent.setVisible(true);
-//                } else {
-//                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
-//                    this.uScoreStudent.setVisible(true);
-//                }
+                if (this.uScoreStudent == null) {
+                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
+                    this.uScoreStudent.setVisible(true);
+                } else {
+                    this.uScoreStudent = new updateScoreStudent(this.className, this.idCourse, _mssv);
+                    this.uScoreStudent.setVisible(true);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
