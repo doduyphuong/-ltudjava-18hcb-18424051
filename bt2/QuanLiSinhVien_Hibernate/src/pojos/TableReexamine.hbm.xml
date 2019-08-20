@@ -8,6 +8,15 @@
             <column name="ID" />
             <generator class="identity" />
         </id>
+        <property name="hocKy" type="string">
+            <column name="HocKy" length="50" />
+        </property>
+        <property name="namHoc" type="string">
+            <column name="NamHoc" length="50" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="Status"/>
+        </property>
         <property name="startDate" type="timestamp">
             <column name="Start_Date" length="19" />
         </property>
