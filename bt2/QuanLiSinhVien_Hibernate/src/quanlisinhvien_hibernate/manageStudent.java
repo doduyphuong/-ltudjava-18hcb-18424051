@@ -67,7 +67,7 @@ public class manageStudent extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStudent = new javax.swing.JTable();
         jbAddStudent = new javax.swing.JButton();
-        jbtUpdate = new javax.swing.JButton();
+        jbtReload = new javax.swing.JButton();
         jbtViewCourse = new javax.swing.JButton();
         jbtBack = new javax.swing.JButton();
 
@@ -111,10 +111,10 @@ public class manageStudent extends javax.swing.JFrame {
             }
         });
 
-        jbtUpdate.setText("Update");
-        jbtUpdate.addActionListener(new java.awt.event.ActionListener() {
+        jbtReload.setText("Reload");
+        jbtReload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtUpdateActionPerformed(evt);
+                jbtReloadActionPerformed(evt);
             }
         });
 
@@ -140,7 +140,7 @@ public class manageStudent extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jbtBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtUpdate)
+                .addComponent(jbtReload)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtViewCourse)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -163,7 +163,7 @@ public class manageStudent extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jbtExport)
                                 .addComponent(jbAddStudent)
-                                .addComponent(jbtUpdate)
+                                .addComponent(jbtReload)
                                 .addComponent(jbtViewCourse)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
@@ -195,9 +195,9 @@ public class manageStudent extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbAddStudentActionPerformed
 
-    private void jbtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateActionPerformed
+    private void jbtReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtReloadActionPerformed
         this.initLayout();
-    }//GEN-LAST:event_jbtUpdateActionPerformed
+    }//GEN-LAST:event_jbtReloadActionPerformed
 
     private void jbtViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtViewCourseActionPerformed
         manageCalenderCourse calenderCourse = new manageCalenderCourse(this.className, this);
@@ -408,7 +408,7 @@ public class manageStudent extends javax.swing.JFrame {
     private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtImport;
-    private javax.swing.JButton jbtUpdate;
+    private javax.swing.JButton jbtReload;
     private javax.swing.JButton jbtViewCourse;
     // End of variables declaration//GEN-END:variables
 }

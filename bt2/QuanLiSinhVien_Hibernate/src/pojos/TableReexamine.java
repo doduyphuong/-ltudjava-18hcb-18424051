@@ -36,6 +36,15 @@ public class TableReexamine implements java.io.Serializable {
         this.created = created;
         this.modified = modified;
     }
+    
+    public TableReexamine(String hocKy, Integer status, String namHoc, Date startDate, Date endDate, String modified) {
+        this.hocKy = hocKy;
+        this.namHoc = namHoc;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.modified = modified;
+    }
 
     public Integer getId() {
         return this.id;

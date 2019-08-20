@@ -38,7 +38,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbtBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jbtUpdate" min="-2" max="-2" attributes="0"/>
+              <Component id="jbtReload" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jbtViewCourse" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jbtExport" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jbAddStudent" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jbtUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jbtReload" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jbtViewCourse" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -126,12 +126,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAddStudentActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jbtUpdate">
+    <Component class="javax.swing.JButton" name="jbtReload">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Update"/>
+        <Property name="text" type="java.lang.String" value="Reload"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtUpdateActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtReloadActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbtViewCourse">

@@ -54,23 +54,27 @@ public class TableReexamineDAO {
 
     public static TableReexamine checkTableReeaxamineExist(TableReexamine tReexamine) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        TableReexamine result = null;
+        List<TableReexamine> result = null;
 
         try {
-            String hql = "select cc";
+            String hql = "select tr";
             hql += " from TableReexamine tr";
             hql += " where tr.hocKy=:hocKy and tr.namHoc=:namHoc";
             Query query = session.createQuery(hql);
             query.setParameter("hocKy", tReexamine.getHocKy());
             query.setParameter("namHoc", tReexamine.getNamHoc());
-            result = (TableReexamine) query.list();
+            result = (List<TableReexamine>) query.list();
         } catch (HibernateException ex) {
             System.err.println(ex);
         } finally {
             session.close();
         }
 
-        return result;
+        if(result.size() > 0) {
+            return result.get(0);
+        }
+        
+        return null;
     }
 
     public static TableReexamine checkTableReeaxamineExist(Integer idTableReeaxamine) {

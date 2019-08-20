@@ -6,9 +6,13 @@
 package quanlisinhvien_hibernate;
 
 import dao.TableReexamineDAO;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojos.TableReexamine;
@@ -23,18 +27,18 @@ public class manageTableReexamine extends javax.swing.JFrame {
     /**
      * Creates new form manageTableReexamine
      */
-    
     private manageClassRoom mClassRoom;
     private final String[] columnNames = {
         "STT", "ID", "From Date", "End Date", "Học Kỳ", "Năm Học", "Status", "Created", "Mofidied"
     };
-    
+    private boolean actionAdd = false;
+
     public manageTableReexamine() {
         this.setResizable(false);
         initComponents();
         initLayout();
     }
-    
+
     public manageTableReexamine(manageClassRoom mClassRoom) {
         this.setResizable(false);
         this.mClassRoom = mClassRoom;
@@ -59,7 +63,7 @@ public class manageTableReexamine extends javax.swing.JFrame {
                 rows[3] = tr.getEndDate().toString();
                 rows[4] = tr.getHocKy();
                 rows[5] = tr.getNamHoc();
-                if(tr.getStatus() == 1) {
+                if (tr.getStatus() == 1) {
                     rows[6] = "Active";
                 } else {
                     rows[6] = "Inactive";
@@ -78,6 +82,7 @@ public class manageTableReexamine extends javax.swing.JFrame {
             jTableReexamine.setModel(tableModel);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,7 +107,11 @@ public class manageTableReexamine extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jYear = new com.toedter.calendar.JYearChooser();
         jbtnAdd = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jcbStatus = new javax.swing.JComboBox();
+        jbtnClose = new javax.swing.JButton();
         jbtnBack = new javax.swing.JButton();
+        jbtnViewUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,34 +166,52 @@ public class manageTableReexamine extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Status");
+
+        jcbStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Active", "Inactive" }));
+
+        jbtnClose.setText("Close");
+        jbtnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCloseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jCreateReexamineLayout = new javax.swing.GroupLayout(jCreateReexamine);
         jCreateReexamine.setLayout(jCreateReexamineLayout);
         jCreateReexamineLayout.setHorizontalGroup(
             jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateReexamineLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jCreateReexamineLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jCreateReexamineLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbHK, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jCreateReexamineLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jCreateReexamineLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jYear, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jbtnAdd)))
-                .addGap(30, 30, 30))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbHK, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateReexamineLayout.createSequentialGroup()
+                        .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jCreateReexamineLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jCreateReexamineLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jYear, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateReexamineLayout.createSequentialGroup()
+                        .addComponent(jbtnClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnAdd)
+                        .addContainerGap())))
         );
         jCreateReexamineLayout.setVerticalGroup(
             jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,21 +222,40 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4)
-                    .addComponent(jYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jcbHK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jbtnAdd)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jCreateReexamineLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel4)
+                            .addComponent(jYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnAdd)
+                            .addComponent(jbtnClose)))
+                    .addGroup(jCreateReexamineLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcbHK, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         jbtnBack.setText("Back");
         jbtnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnBackActionPerformed(evt);
+            }
+        });
+
+        jbtnViewUpdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnViewUpdate.setText("Update");
+        jbtnViewUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnViewUpdateActionPerformed(evt);
             }
         });
 
@@ -224,6 +270,8 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnViewReexamine, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnViewUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnViewAdd)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -246,20 +294,39 @@ public class manageTableReexamine extends javax.swing.JFrame {
                         .addComponent(jbtnBack)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCreateReexamine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnViewReexamine)
-                    .addComponent(jbtnViewAdd))
+                    .addComponent(jbtnViewAdd)
+                    .addComponent(jbtnViewUpdate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbtnViewAdd, jbtnViewUpdate});
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnViewAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewAddActionPerformed
-        this.jCreateReexamine.setVisible(!this.jCreateReexamine.isVisible());
+        if (this.jCreateReexamine.isVisible() == false) {
+            this.jCreateReexamine.setVisible(true);
+            actionAdd = true;
+            this.jbtnAdd.setText("Add");
+            this.jcbStatus.setVisible(false);
+            this.jLabel5.setVisible(false);
+            this.jbtnClose.setVisible(false);
+        } else if (actionAdd == false && this.jCreateReexamine.isVisible() == true) {
+            // Đang hiển thị update
+            actionAdd = true;
+            this.jbtnAdd.setText("Add");
+            this.jcbStatus.setVisible(false);
+            this.jLabel5.setVisible(false);
+            this.jbtnClose.setVisible(false);
+        } else {
+            this.jCreateReexamine.setVisible(!this.jCreateReexamine.isVisible());
+        }
     }//GEN-LAST:event_jbtnViewAddActionPerformed
 
     private void jbtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
@@ -270,22 +337,102 @@ public class manageTableReexamine extends javax.swing.JFrame {
 
     private void jbtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddActionPerformed
         // TODO add your handling code here:
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         Date From = this.jFromDate.getDate();
         Date End = this.jEndDate.getDate();
         System.out.println(End.after(From));
-        if(End.after(From)) {
+        if (End.after(From)) {
             String hocKy = String.valueOf(jcbHK.getItemAt(jcbHK.getSelectedIndex()));
             String namHoc = String.valueOf(this.jYear.getYear());
-            TableReexamine tReexamine = new TableReexamine(hocKy, 1, namHoc,From,End, account.getUserName(),account.getUserName());
-            boolean checkCreate = TableReexamineDAO.createTableReeaxamine(tReexamine);
-            if(checkCreate) {
-                JOptionPane.showMessageDialog(null, "Tạo lịch phúc khảo thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            if (actionAdd == true) {
+                // Thêm mới
+                TableReexamine tReexamine = new TableReexamine(hocKy, 1, namHoc, From, End, account.getUserName(), account.getUserName());
+                boolean checkCreate = TableReexamineDAO.createTableReeaxamine(tReexamine);
+                if (checkCreate) {
+                    JOptionPane.showMessageDialog(null, "Tạo lịch phúc khảo thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    this.jCreateReexamine.setVisible(false);
+                    initLayout();
+                }
+            } else {
+                // Cập nhật
+                String _status = String.valueOf(jcbStatus.getItemAt(jcbStatus.getSelectedIndex()));
+
+                int status = 0;
+                if (_status.equals("Active")) {
+                    status = 1;
+                }
+
+                TableReexamine tReexamine = new TableReexamine(hocKy, status, namHoc, From, End, account.getUserName());
+                
+                if (tReexamine != null) {
+                    boolean checkUpdate = TableReexamineDAO.updateTableReeaxamine(tReexamine);
+                    if (checkUpdate) {
+                        JOptionPane.showMessageDialog(null, "Cập nhật lịch phúc khảo thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        this.jCreateReexamine.setVisible(false);
+                        initLayout();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Xảy ra lỗi cập nhật.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    initLayout();
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ngày kết thúc chưa hợp lệ.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jbtnAddActionPerformed
+
+    private void jbtnViewUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewUpdateActionPerformed
+        // TODO add your handling code here:
+        int selectRow = jTableReexamine.getSelectedRow();
+        if (selectRow >= 0) {
+            try {
+                if (this.jCreateReexamine.isVisible() == false) {
+                    actionAdd = false;
+                    this.jCreateReexamine.setVisible(true);
+                    this.jbtnAdd.setText("Submit");
+                    this.jcbStatus.setVisible(true);
+                    this.jLabel5.setVisible(true);
+                    this.jbtnClose.setVisible(true);
+                } else if (actionAdd == true && this.jCreateReexamine.isVisible() == true) {
+                    actionAdd = false;
+                    this.jCreateReexamine.setVisible(true);
+                    this.jbtnAdd.setText("Submit");
+                    this.jcbStatus.setVisible(true);
+                    this.jLabel5.setVisible(true);
+                    this.jbtnClose.setVisible(true);
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+                String from = (String) jTableReexamine.getValueAt(selectRow, 2);
+                Date x = sdf.parse(from);
+                this.jFromDate.setDate(x);
+
+                String end = (String) jTableReexamine.getValueAt(selectRow, 3);
+                Date y = sdf.parse(end);
+                this.jEndDate.setDate(y);
+
+                String hocKy = (String) jTableReexamine.getValueAt(selectRow, 4);
+                this.jcbHK.setSelectedItem(hocKy);
+
+                String namHoc = (String) jTableReexamine.getValueAt(selectRow, 5);
+                System.out.println(namHoc);
+                this.jYear.setValue(Integer.valueOf(namHoc));
+
+                String status = (String) jTableReexamine.getValueAt(selectRow, 6);
+                this.jcbStatus.setSelectedItem(status);
+            } catch (ParseException ex) {
+                Logger.getLogger(manageTableReexamine.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jbtnViewUpdateActionPerformed
+
+    private void jbtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCloseActionPerformed
+        // TODO add your handling code here:
+        this.jCreateReexamine.setVisible(false);
+    }//GEN-LAST:event_jbtnCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,14 +477,18 @@ public class manageTableReexamine extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableReexamine;
     private javax.swing.JLabel jTitle;
     private com.toedter.calendar.JYearChooser jYear;
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JButton jbtnBack;
+    private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnViewAdd;
     private javax.swing.JButton jbtnViewReexamine;
+    private javax.swing.JButton jbtnViewUpdate;
     private javax.swing.JComboBox jcbHK;
+    private javax.swing.JComboBox jcbStatus;
     // End of variables declaration//GEN-END:variables
 }
