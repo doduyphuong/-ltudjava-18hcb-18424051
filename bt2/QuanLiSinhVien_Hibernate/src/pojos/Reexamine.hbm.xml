@@ -15,10 +15,10 @@
             <column name="Name" length="65535" />
         </property>
         <property name="course" type="string">
-            <column name="Course" />
+            <column name="Course" length="255"/>
         </property>
         <property name="rowScore" type="string">
-            <column name="Row_score" />
+            <column name="Row_score" length="255"/>
         </property>
         <property name="suggestScore" type="java.lang.Double">
             <column name="Suggest_score" precision="255" scale="0" />
@@ -27,10 +27,10 @@
             <column name="Description" length="65535" />
         </property>
         <property name="status" type="string">
-            <column name="Status" />
+            <column name="Status" length="255"/>
         </property>
-        <property name="iđTableReexamine" type="java.lang.Integer">
-            <column name="iđTableReexamine" />
+        <property name="idTableReexamine" type="java.lang.Integer">
+            <column name="IDTableReexamine" length="11"/>
         </property>
     </class>
 </hibernate-mapping>

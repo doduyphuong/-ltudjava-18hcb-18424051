@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -110,6 +109,7 @@ public class manageTableReexamine extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jcbStatus = new javax.swing.JComboBox();
         jbtnClose = new javax.swing.JButton();
+        jtxtID = new javax.swing.JTextField();
         jbtnBack = new javax.swing.JButton();
         jbtnViewUpdate = new javax.swing.JButton();
 
@@ -135,6 +135,11 @@ public class manageTableReexamine extends javax.swing.JFrame {
 
         jbtnViewReexamine.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnViewReexamine.setText("View ");
+        jbtnViewReexamine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnViewReexamineActionPerformed(evt);
+            }
+        });
 
         jbtnViewAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnViewAdd.setText("Add");
@@ -194,8 +199,8 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcbHK, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateReexamineLayout.createSequentialGroup()
                         .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jCreateReexamineLayout.createSequentialGroup()
@@ -208,6 +213,8 @@ public class manageTableReexamine extends javax.swing.JFrame {
                                 .addComponent(jYear, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateReexamineLayout.createSequentialGroup()
+                        .addComponent(jtxtID)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnClose)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnAdd)
@@ -231,7 +238,8 @@ public class manageTableReexamine extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbtnAdd)
-                            .addComponent(jbtnClose)))
+                            .addComponent(jbtnClose)
+                            .addComponent(jtxtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jCreateReexamineLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jCreateReexamineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -317,6 +325,7 @@ public class manageTableReexamine extends javax.swing.JFrame {
             this.jcbStatus.setVisible(false);
             this.jLabel5.setVisible(false);
             this.jbtnClose.setVisible(false);
+            this.jtxtID.setVisible(false);
         } else if (actionAdd == false && this.jCreateReexamine.isVisible() == true) {
             // Đang hiển thị update
             actionAdd = true;
@@ -324,6 +333,7 @@ public class manageTableReexamine extends javax.swing.JFrame {
             this.jcbStatus.setVisible(false);
             this.jLabel5.setVisible(false);
             this.jbtnClose.setVisible(false);
+            this.jtxtID.setVisible(false);
         } else {
             this.jCreateReexamine.setVisible(!this.jCreateReexamine.isVisible());
         }
@@ -339,7 +349,6 @@ public class manageTableReexamine extends javax.swing.JFrame {
         // TODO add your handling code here:
         Date From = this.jFromDate.getDate();
         Date End = this.jEndDate.getDate();
-        System.out.println(End.after(From));
         if (End.after(From)) {
             String hocKy = String.valueOf(jcbHK.getItemAt(jcbHK.getSelectedIndex()));
             String namHoc = String.valueOf(this.jYear.getYear());
@@ -361,9 +370,15 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     status = 1;
                 }
 
-                TableReexamine tReexamine = new TableReexamine(hocKy, status, namHoc, From, End, account.getUserName());
-                
+                int id = Integer.valueOf(this.jtxtID.getText());
+                TableReexamine tReexamine = TableReexamineDAO.checkTableReeaxamineExist(id);
                 if (tReexamine != null) {
+                    tReexamine.setHocKy(hocKy);
+                    tReexamine.setStatus(status);
+                    tReexamine.setNamHoc(namHoc);
+                    tReexamine.setStartDate(From);
+                    tReexamine.setEndDate(End);
+                    tReexamine.setModified(account.getUserName());
                     boolean checkUpdate = TableReexamineDAO.updateTableReeaxamine(tReexamine);
                     if (checkUpdate) {
                         JOptionPane.showMessageDialog(null, "Cập nhật lịch phúc khảo thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -392,6 +407,8 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     this.jcbStatus.setVisible(true);
                     this.jLabel5.setVisible(true);
                     this.jbtnClose.setVisible(true);
+                    this.jtxtID.setVisible(true);
+                    this.jtxtID.setEnabled(false);
                 } else if (actionAdd == true && this.jCreateReexamine.isVisible() == true) {
                     actionAdd = false;
                     this.jCreateReexamine.setVisible(true);
@@ -399,9 +416,14 @@ public class manageTableReexamine extends javax.swing.JFrame {
                     this.jcbStatus.setVisible(true);
                     this.jLabel5.setVisible(true);
                     this.jbtnClose.setVisible(true);
+                    this.jtxtID.setVisible(true);
+                    this.jtxtID.setEnabled(false);
                 }
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+                String id = (String) jTableReexamine.getValueAt(selectRow, 1);
+                this.jtxtID.setText(id);
 
                 String from = (String) jTableReexamine.getValueAt(selectRow, 2);
                 Date x = sdf.parse(from);
@@ -415,7 +437,6 @@ public class manageTableReexamine extends javax.swing.JFrame {
                 this.jcbHK.setSelectedItem(hocKy);
 
                 String namHoc = (String) jTableReexamine.getValueAt(selectRow, 5);
-                System.out.println(namHoc);
                 this.jYear.setValue(Integer.valueOf(namHoc));
 
                 String status = (String) jTableReexamine.getValueAt(selectRow, 6);
@@ -433,6 +454,18 @@ public class manageTableReexamine extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.jCreateReexamine.setVisible(false);
     }//GEN-LAST:event_jbtnCloseActionPerformed
+
+    private void jbtnViewReexamineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewReexamineActionPerformed
+        // TODO add your handling code here:
+        int selectRow = jTableReexamine.getSelectedRow();
+        if (selectRow >= 0) {
+            int id = (int) jTableReexamine.getValueAt(selectRow, 1);
+            manageReexamine mReexamine = new manageReexamine(this, id);
+            mReexamine.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để thực hiện", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jbtnViewReexamineActionPerformed
 
     /**
      * @param args the command line arguments
@@ -490,5 +523,6 @@ public class manageTableReexamine extends javax.swing.JFrame {
     private javax.swing.JButton jbtnViewUpdate;
     private javax.swing.JComboBox jcbHK;
     private javax.swing.JComboBox jcbStatus;
+    private javax.swing.JTextField jtxtID;
     // End of variables declaration//GEN-END:variables
 }

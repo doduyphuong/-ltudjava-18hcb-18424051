@@ -35,6 +35,19 @@ public class Reexamine implements java.io.Serializable {
         this.status = status;
     }
 
+    public Reexamine(int id, String mssv, String name, String course, String rowScore, Double suggestScore, String description, String status,int idTableReexamine) {
+        this.id = id;
+        this.mssv = mssv;
+        this.name = name;
+        this.course = course;
+        this.rowScore = rowScore;
+        this.suggestScore = suggestScore;
+        this.description = description;
+        this.status = status;
+        this.idTableReexamine = idTableReexamine;
+    }
+
+    
     public int getId() {
         return this.id;
     }
