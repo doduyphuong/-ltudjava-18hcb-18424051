@@ -459,7 +459,9 @@ public class manageTableReexamine extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectRow = jTableReexamine.getSelectedRow();
         if (selectRow >= 0) {
-            int id = (int) jTableReexamine.getValueAt(selectRow, 1);
+            String tmp = (String) jTableReexamine.getValueAt(selectRow, 1);
+            int id = Integer.valueOf(tmp);
+            System.out.println(id);
             manageReexamine mReexamine = new manageReexamine(this, id);
             mReexamine.setVisible(true);
         } else {

@@ -20,12 +20,10 @@ public class Reexamine implements java.io.Serializable {
     }
 
     public Reexamine(int id, String mssv) {
-        this.id = id;
         this.mssv = mssv;
     }
 
-    public Reexamine(int id, String mssv, String name, String course, String rowScore, Double suggestScore, String description, String status) {
-        this.id = id;
+    public Reexamine(String mssv, String name, String course, String rowScore, Double suggestScore, String description, String status) {
         this.mssv = mssv;
         this.name = name;
         this.course = course;
@@ -35,8 +33,7 @@ public class Reexamine implements java.io.Serializable {
         this.status = status;
     }
 
-    public Reexamine(int id, String mssv, String name, String course, String rowScore, Double suggestScore, String description, String status,int idTableReexamine) {
-        this.id = id;
+    public Reexamine(String mssv, String name, String course, String rowScore, Double suggestScore, String description, String status,int idTableReexamine) {
         this.mssv = mssv;
         this.name = name;
         this.course = course;

@@ -38,6 +38,26 @@ public class ReexamineDAO {
         return result;
     }
     
+    public static List<Reexamine> getListReexamine(String mssv) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Reexamine> result = null;
+        
+        try {
+            String hql = "select re";
+            hql += " from Reexamine re";
+            hql += " where re.mssv=:mssv";
+            Query query = session.createQuery(hql);
+            query.setParameter("mssv", mssv);
+            result = (List<Reexamine>) query.list();
+        } catch(HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        
+        return result;
+    }
+    
     public static Reexamine getReexamine(int idReexamine) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Reexamine> result = null;
